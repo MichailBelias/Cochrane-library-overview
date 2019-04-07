@@ -1,0 +1,17 @@
+---
+title: Treatment effect modification in individual participant data-sets on Cochrane
+  library
+author: "Michail Belias"
+date: "April 7, 2019"
+output:
+  pdf_document: default
+  html_document: default
+bibliography: Style and bibliography/bibliography2.bib
+---
+
+
+  Meta-analysis is a statistical method that involves combining results from multiple studies. Initially, meta-analysis were the final part of a systematic review and were conducted almost exclusively in aggregated data. In the early 1990s individual participant data meta-analysis (IPDMA) was introduced. In IPD-MA the participant level data from various studies are available and analysed centrally. Numerous rewards and challenges [@van_Walraven_2010] place IPD-MA to the top of data analysis and is widely considered the gold standard of evidence synthesis offering. One of the most profound uses of IPD-MA is the investigation of treatment effect differences across patients with different characteristics. Numerous approaches have been proposed and extensive literature exists over which methods shoudl be prefered, when investigating effect modification.
+  Briefly, the methods that are mostly used are one-stage IPD-MA involving multi-level (or mixed-effects) models, two-stage meta-analysis of interaction terms, per-subgroup meta-analysis and meta-regression [@Fisher_2011]. 
+  
+Cochrane library contains numerous systematic reviews and meta-analyses covering various medical fields. In general, cochrane reviews are 
+Cochrane reviews and meta-analysis are  goal is to overview the 
