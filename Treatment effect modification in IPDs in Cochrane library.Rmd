@@ -10,8 +10,13 @@ bibliography: Style and bibliography/bibliography2.bib
 ---
 
 
-  Meta-analysis is a statistical method that involves combining results from multiple studies. Initially, meta-analysis were the final part of a systematic review and were conducted almost exclusively in aggregated data. In the early 1990s individual participant data meta-analysis (IPDMA) was introduced. In IPD-MA the participant level data from various studies are available and analysed centrally. Numerous rewards and challenges [@van_Walraven_2010] place IPD-MA to the top of data analysis and is widely considered the gold standard of evidence synthesis offering. One of the most profound uses of IPD-MA is the investigation of treatment effect differences across patients with different characteristics. Numerous approaches have been proposed and extensive literature exists over which methods shoudl be prefered, when investigating effect modification.
-  Briefly, the methods that are mostly used are one-stage IPD-MA involving multi-level (or mixed-effects) models, two-stage meta-analysis of interaction terms, per-subgroup meta-analysis and meta-regression [@Fisher_2011]. 
+  Meta-analysis (MA) is a well established statistical method that involves combining information from multiple studies. Initially, meta-analyses were limited in aggregated data (AD), until the early 1990s when individual participant data meta-analysis (IPDMA) was introduced. In IPD-MA the participant level data from multiple studies is available and analysed simultaneously. IPD-MA is considered the gold standard of evidence synthesis offering great opportunities [@van_Walraven_2010], one of which is the opportunity to investigate treatment effect heterogeneity across patients with different characteristics. Since the data come from different studies it is reasonable and essential to account for the within studies clustering of the participants. to achieve that, IPD-MA may be conducted either in one or two stages. In two-stage IPD-MA, each study is first analysed separately, using an appropriate statistical model. Subsequently, the results extracted in the first stage are pooled into a summary estimate in the second stage of the meta-analysis. An aggregated data approach that is still used is meta-regression. Meta-regression associates the estimated main treatment effects with an aggregated study-level covariate and therefore neglects the individual information available. to no surprise this approach is critisized to be prone to ecological bias and severe lack of power. Alternatively, estimates of subgroup effects or interaction terms can directly pooled using traditional meta-analysis (MA) methods. 
   
-Cochrane library contains numerous systematic reviews and meta-analyses covering various medical fields. In general, cochrane reviews are 
-Cochrane reviews and meta-analysis are  goal is to overview the 
+  
+  
+  Our goal is to overview the available IPD-MA in the Cochrane library and report if they investigated for effect modification over patient level characteristics. We chose the Cochrane library as Cochrane reviews and meta-analyses are considered on average of high quality. 
+
+  
+  
+  
+Cochrane library contains numerous systematic reviews and meta-analyses covering various medical fields. 
