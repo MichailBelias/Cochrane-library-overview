@@ -10,7 +10,13 @@ bibliography: Style and bibliography/bibliography2.bib
 ---
 
 
-  Meta-analysis (MA) is a well established statistical method that involves combining information from multiple studies. Initially, meta-analyses were limited in aggregated data (AD), until the early 1990s when individual participant data meta-analysis (IPDMA) was introduced. In IPD-MA the participant level data from multiple studies is available and analysed simultaneously. IPD-MA is considered the gold standard of evidence synthesis offering great opportunities [@van_Walraven_2010], one of which is the opportunity to investigate treatment effect heterogeneity across patients with different characteristics. Since the data come from different studies it is reasonable and essential to account for the within studies clustering of the participants. to achieve that, IPD-MA may be conducted either in one or two stages. In two-stage IPD-MA, each study is first analysed separately, using an appropriate statistical model. Subsequently, the results extracted in the first stage are pooled into a summary estimate in the second stage of the meta-analysis. An aggregated data approach that is still used is meta-regression. Meta-regression associates the estimated main treatment effects with an aggregated study-level covariate and therefore neglects the individual information available. to no surprise this approach is critisized to be prone to ecological bias and severe lack of power. Alternatively, estimates of subgroup effects or interaction terms can directly pooled using traditional meta-analysis (MA) methods. 
+  Meta-analysis (MA) is a well established statistical method that involves combining information from multiple studies. Initially, meta-analyses were limited in aggregated data (AD), until the early 1990s when individual participant data meta-analysis (IPDMA) was introduced [@CHALMERS_1993]. In IPD-MA the participant level information is available and therefore the whole data-set can be analysed simultaneously. IPD-MA is considered the gold standard of evidence synthesis offering great opportunities [@van_Walraven_2010]. The opportunity to investigate treatment effect modification over patient characteristics can lead to better clinical decision making. In single studies a potential effect modifier can be detected either by fitting an appropriate model including interaction terms or by splitting the data-set over the levels of the modifier measure the treatment effect. Apparently, the second choice involves only  categorical effect modifiers. 
+  
+  Given that data are driven from different studies it is essential to account for the within studies clustering of the participants [@Riley_2010]. 
+  
+  
+  
+  IPD-MA may be conducted either in one or two stages [@Debray_2015]. In two-stage IPD-MA, each study is first analysed separately, using an appropriate statistical model. Subsequently, the results extracted in the first stage are pooled into a summary estimate in the second stage of the meta-analysis. An aggregated data approach that is still used is meta-regression. Meta-regression associates the estimated main treatment effects with an aggregated study-level co-variable and therefore neglects the individual information available. to no surprise this approach is criticized to be prone to ecological bias and severe lack of power. Alternatively, estimates of subgroup effects or interaction terms can directly pooled using traditional meta-analysis (MA) methods. 
   
   
   
@@ -18,5 +24,6 @@ bibliography: Style and bibliography/bibliography2.bib
 
   
   
-  
+# Methods 
+We searched in the Cochrane library for IPD meta-analyses (https://methods.cochrane.org/ipdma/ipd-meta-analyses). The cochrane library for IPD-MA is divided into 18 medical fields. Specifically, more than 200 articles involving  
 Cochrane library contains numerous systematic reviews and meta-analyses covering various medical fields. 

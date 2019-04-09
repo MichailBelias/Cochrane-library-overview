@@ -1,0 +1,512 @@
+sm = "hr", method.tau = "DL", hakn = TRUE)
+summary(meta.ran.dl.hksj)
+meta.ran.reml.hksj <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "REML", hakn = TRUE)
+summary(meta.ran.reml.hksj)
+setwd("C:/Work/IPD course/R datasets/Practical 4")
+library(readxl)
+fibrinogen <- read_excel("fibrinogen.xls")
+install.packages("mvmeta")
+library(mvmeta)
+meta.reml <- metagen(y1, se1, study, data = fibrinogen,
+sm = "logHR", comb.random = TRUE, method.tau = "REML")
+meta.reml
+library(meta)
+meta.reml <- metagen(y1, se1, study, data = fibrinogen,
+sm = "logHR", comb.random = TRUE, method.tau = "REML")
+meta.reml
+model <- mvmeta(y1, S = v11, data = fibrinogen, method = "reml")
+model
+model$vcov
+summary(model)
+fib.mvmeta <- read_excel("mvmeta_data.xls")
+V <- bldiag(lapply(split(fib.mvmeta[,c("v1i", "v2i")], fib.mvmeta$study), as.matrix))
+library(metafor)
+V <- bldiag(lapply(split(fib.mvmeta[,c("v1i", "v2i")], fib.mvmeta$study), as.matrix))
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fib.mvmeta, method="REML")
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fib.mvmeta, method="REML", na.action = "na.pass")
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fib.mvmeta, method="REML", na.action = "na.omit")
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fib.mvmeta, method="REML", na.action = "na.exclude")
+View(fib.mvmeta)
+help("berkey98")
+View(berkey98)
+model2 <- mvmeta(cbind(y1, y2), S = fibrinogen(cbind(v11, v22, v12)), data = fibrinogen,
+method = "REML")
+model2 <- mvmeta(cbind(y1, y2), S = fibrinogen(cbind(v11, v22, v12)), data = fibrinogen,
+method = "reml")
+model2 <- mvmeta(cbind(y1, y2), S = cbind(v11, v22, v12), data = fibrinogen,
+method = "reml")
+model2 <- mvmeta(cbind(y1, y2), S = fibrinogen[7:9], data = fibrinogen,
+method = "reml")
+model2 <- mvmeta(cbind(y1, y2), S = fibrinogen[7:9], data = fibrinogen,
+method = "reml", na.action = "na.omit")
+model2 <- mvmeta(cbind(y1, y2), S = fibrinogen[7:9], data = fibrinogen,
+method = "reml", na.action = "na.exclude")
+model2 <- mvmeta(cbind(y1, y2), S = fibrinogen[7:9], data = fibrinogen,
+method = "reml", na.action = na.exclude())
+model2 <- mvmeta(cbind(y1, y2), S = fibrinogen[7:9], data = fibrinogen,
+method = "reml", na.action = na.exclude)
+fibtest <- read_excel("test.xls")
+View(fibtest)
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml" )
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml", na.action = na.exclude)
+data <- berkey98
+data[2,1] <- data[4,3] <- NA
+View(data)
+model <- mvmeta(cbind(PD,AL)~pubyear,S=data[5:7],data=data,method="ml")
+summary(model)
+df.residual(model)
+model.frame(model,na.action="na.pass")
+model.frame(model,na.action="na.omit")
+frame <- model.frame(model,na.action="na.pass")
+na.omit(frame)
+class(frame)
+class(frame) <- "data.frame"
+na.omit(frame)
+residuals(model)
+residuals(update(model,na.action="na.exclude"))
+fibtest <- read_excel("test.xls")
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml")
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml", na.action = "na.exclude")
+View(fibtest)
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], subset(fibtest, study < 16),
+method = "reml", na.action = "na.exclude")
+fibtest <- read_excel("test.xls")
+View(fibtest)
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml", na.action = "na.exclude")
+fibtest <- read_excel("test.xls")
+View(fibtest)
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml")
+fibtest <- read_excel("test.xls")
+View(fibtest)
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml")
+fibtest2 <- read_excel("test2.xls")
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fibtest2, method="REML", na.action = "na.exclude")
+View(fibtest2)
+print(biv.full.part, digits=3)
+fibtest <- read_excel("test.xls")
+View(fibtest)
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "reml")
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "ml")
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "ml", bscov="unstr")
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "fixed")
+model2 <- mvmeta(cbind(y1, y2), S = fibtest[7:9], data = fibtest,
+method = "mm")
+fibtest2 <- read_excel("test2.xls")
+View(fibtest2)
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fibtest2, method="REML", na.action = "na.exclude")
+print(biv.full.part, digits=3)
+V2 <- bldiag(lapply(split(fibtest2[,c("v1i", "v2i")], fibtest2$study), as.matrix))
+V2
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fibtest2, method="REML", na.action = "na.exclude")
+print(biv.full.part, digits=3)
+biv.full.part <- rma.mv(yi, V2, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fibtest2, method="REML", na.action = "na.exclude")
+print(biv.full.part, digits=3)
+fibtest2 <- read_excel("test2.xls")
+View(fibtest2)
+V2 <- bldiag(lapply(split(fibtest2[,c("v1i", "v2i")], fibtest2$study), as.matrix))
+biv.full.part <- rma.mv(yi, V2, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fibtest2, method="REML")
+print(biv.full.part, digits=3)
+fib.mvmeta <- read_excel("mvmeta_data.xls")
+View(fib.mvmeta)
+V <- bldiag(lapply(split(fib.mvmeta[,c("v1i", "v2i")], fib.mvmeta$study), as.matrix))
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fib.mvmeta, method="REML")
+print(biv.full.part, digits=3)
+fib.mvmeta <- read_excel("mvmeta_data.xls")
+View(fib.mvmeta)
+V <- bldiag(lapply(split(fib.mvmeta[,c("v1i", "v2i")], fib.mvmeta$study), as.matrix))
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fib.mvmeta, method="REML")
+print(biv.full.part, digits=3)
+weights(biv.full.part)
+study.weights <- weights(biv.full.part)
+study.weights
+for.mvmeta <- forest(biv.full.part, comb.fixed = FALSE)
+warnings()
+for.mvmeta <- forest(biv.full.part, comb.fixed = FALSE, xlim = c(-10, 10))
+View(biv.full.part)
+four.outcomes <- read_excel("four_outcomes.xls")
+View(four.outcomes)
+model <- mvmeta(cbind(Y1,Y2,Y3,Y4), S = four.outcomes[10:13, 22:27],
+data = four.outcomes, method = "reml")
+model <- mvmeta(cbind(Y1,Y2,Y5,Y6), S = four.outcomes[10:13, 22:27],
+data = four.outcomes, method = "reml")
+help("fibrinogen")
+View(fibrinogen)
+View(fibrinogen)
+View(four.outcomes)
+y <- as.matrix(four.outcomes[2:5])
+rm(fibrinogen)
+help("fibrinogen")
+View(fibrinogen)
+four.outcomes <- read_excel("four_outcomes.xls")
+View(four.outcomes)
+y <- as.matrix(four.outcomes[2:5])
+S <- as.matrix(four.outcomes[6:15])
+model.four.outcomes <- mvmeta(y, S)
+print(summary(model.four.outcomes),digits=3)
+exp(model.four.outcomes$coefficients)
+names(coef(model.four.outcomes))
+library(foreign)
+library(multcomp)
+install.packages("multcomp")
+library(multcomp)
+summary(glht(model.four.outcomes, linfct = c("Y1.(Intercept) - Y2.(Intercept) = 0")))
+summary(glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) = 0"))
+names(coef(model.four.outcomes))
+summary(glht(model.four.outcomes, linfct = "Y1 - Y2 = 0"))
+summary(glht(model.four.outcomes, linfct = "Y1.(Intercept)" - "Y2.(Intercept)" = 0))
+coef(model.four.outcomes)
+summary(glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) = 0"))
+summary(glht(model.four.outcomes, linfct =  c("Y1.(Intercept) - Y2.(Intercept) = 0"))
+)
+summary(glht(model.four.outcomes, linfct =  "Y1.(Intercept) - Y2.(Intercept) = 0"))
+summary(glht(model.four.outcomes, linfct =  Y1.(Intercept) - Y2.(Intercept) = 0))
+summary(glht(model.four.outcomes, linfct =  Y1.(Intercept) - Y2.(Intercept) ))
+K <- diag(length(coef(model.four.outcomes)))[-1,]
+rownames(K) <- names(coef(model.four.outcomes))[-1]
+K
+K <- diag(length(coef(model.four.outcomes)))[0,]
+rownames(K) <- names(coef(model.four.outcomes))[0]
+K
+K <- diag(length(coef(model.four.outcomes)))[]
+rownames(K) <- names(coef(model.four.outcomes))[]
+K
+summary(glht(model.four.outcomes, linfct = K))
+summary(glht(model.four.outcomes, linfct = K[1,1] - K[2,2]))
+summary(glht(model.four.outcomes, linfct = "K[1,1] - K[2,2] = 0"))
+summary(glht(model.four.outcomes, linfct = K))
+summary(glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) = 0"))
+glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) = 0")
+lincom <- glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) = 0")
+lincom <- glht(model.four.outcomes, linfct = "Y1.(Intercept) = Y2.(Intercept) ")
+lincom <- glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) ")
+lincom <- glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) = 0 ")
+model.four.outcomes <- mvmeta(y, S, btt = 1:2)
+names(coef(model.four.outcomes))
+lincom <- glht(model.four.outcomes, linfct = "Y1.(Intercept) - Y2.(Intercept) = 0")
+contr <- rbind("Y1 - Y2" = c(1, -1, 0, 0))
+lincom <- glht(model.four.outcomes, linfct = contr)
+lincom
+confint(lincom)
+S
+S[10,2] <- NA
+S
+model.four.outcomes <- mvmeta(y, S)
+thromb <- read_excel("thromb.xls")
+View(thromb)
+install.packages("netmeta")
+library(netmeta)
+data("parkinson")
+View(parkinson)
+net.data <- pairwise(treat, r, n, data = thromb, studlab = study)
+net.data
+View(net.data)
+net1 <- netmeta(net.data)
+net1
+net.data <- pairwise(treat, r, n, data = thromb, studlab = study, sm = "OR")
+View(net.data)
+net1 <- netmeta(net.data, sm = "OR")
+net1
+net1 <- netmeta(net.data, sm = "OR", comb.random = TRUE)
+net1
+treat.ests <- net1$TE.nma.random
+treat.ests
+treat.ests <- exp(net1$TE.nma.random)
+treat.ests
+treat.ests <- exp(net1$TE.random)
+treat.ests
+treat.ests.lower <- exp(net1$lower.random)
+treat.ests.lower
+treat.ests.upper <- exp(net1$upper.random)
+treat.ests.upper
+net1$Q.matrix
+net1$Cov.random
+net1$G.matrix
+net1 <- netmeta(net.data, sm = "OR", comb.random = TRUE, tol.multiarm = 0.0005)
+net1
+net1$Cov.random
+net1$Q
+net1$Q.matrix
+net1$G.matrix
+net1$Cov.random
+forest(net1)
+setwd("C:/Work/IPD course/R datasets/Practical 1")
+library(readxl)
+eryt <- read_excel("eryt.xls")
+View(eryt)
+study1 <- ifelse(eryt$studyid==1, 1, 0)
+study2 <- ifelse(eryt$studyid==2, 1, 0)
+study3 <- ifelse(eryt$studyid==3, 1, 0)
+View(eryt)
+study1
+eryt$study1 <- ifelse(eryt$studyid==1, 1, 0)
+eryt$study2 <- ifelse(eryt$studyid==2, 1, 0)
+eryt$study3 <- ifelse(eryt$studyid==3, 1, 0)
+lr1 <- glm(dvt ~ eryt, subset(eryt, studyid==1),
+family = binomial(link = "logit"))
+lr2 <- glm(dvt ~ eryt, subset(eryt, studyid==2),
+family = binomial(link = "logit"))
+lr3 <- glm(dvt ~ eryt, subset(eryt, studyid==3),
+family = binomial(link = "logit"))
+eryt_summary <- read_excel("eryt summary.xls")
+setwd("C:/Work/IPD course/R datasets/Practical 1")
+eryt_summary <- read_excel("eryt_summary.xls")
+View(eryt_summary)
+SBP <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SBP.xls")
+mean(subset(SBP, trialdummy == 1 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 1 & treat == 0)$sbpi)
+mean(subset(SBP, trialdummy == 2 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 2 & treat == 0)$sbpi)
+mean(subset(SBP, trialdummy == 3 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 3 & treat == 0)$sbpi)
+mean(subset(SBP, trialdummy == 4 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 4 & treat == 0)$sbpi)
+mean(subset(SBP, trialdummy == 5 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 5 & treat == 0)$sbpi)
+mean(subset(SBP, trialdummy == 6 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 6 & treat == 0)$sbpi)
+ancova <- glm(sbpl ~ sbpi + treat, subset(SBP, trialdummy==1),
+family = gaussian(link = "identity"))
+final <- glm(sbpl ~ treat, subset(SBP, trialdummy==1),
+family = gaussian(link = "identity"))
+change <- glm(diff ~ treat, subset(SBP, trialdummy==1),
+family = gaussian(link = "identity"))
+SBP_summary <- read_excel("SBP_summary.xls")
+survIPD <- read_excel("SurvivalIPD.xls")
+library(survival)
+library(survminer)
+library(dplyr)
+surv_object <- Surv(survIPD$stime, survIPD$event)
+summ_surv <- read_excel("surv_summary.xls")
+surv.ran.dl <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "DL")
+surv.ran.ml <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "ML")
+surv.ran.reml <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "REML")
+surv.ran.dl.hksj <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "DL", hakn = TRUE)
+surv.ran.reml.hksj <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "REML", hakn = TRUE)
+View(eryt)
+eryt <- read_excel("eryt.xls")
+View(eryt)
+eryt$study1 <- ifelse(eryt$studyid == 1, 1, 0)
+eryt$study2 <- ifelse(eryt$studyid == 2, 1, 0)
+eryt$study3 <- ifelse(eryt$studyid == 3, 1, 0)
+one.strat <- glm(dvt ~ eryt + study1 + study2 + study3 -1, data = eryt,
+family = binomial(link = "logit"))
+study <- table(eryt$studyid, eryt$dvt)
+study
+install.packages("lme4")
+glmm1 <- glmer(dvt ~ eryt + study1 + study2 + study3 + (eryt -1 | studyid) -1, data = eryt,
+family = binomial)
+one.randint.rand <- glmer(dvt ~  eryt + (1 + eryt || studyid) , data = eryt,
+family = binomial)
+library(lme4)
+one.strat.rand <- glmer(dvt ~ eryt + study1 + study2 + study3 + (eryt -1 | studyid) -1, data = eryt,
+family = binomial)
+one.randint.rand <- glmer(dvt ~  eryt + (1 + eryt || studyid) , data = eryt,
+family = binomial)
+SBP$study1 <- ifelse(SBP$trialdummy == 1, 1, 0)
+SBP$study2 <- ifelse(SBP$trialdummy == 2, 1, 0)
+SBP$study3 <- ifelse(SBP$trialdummy == 3, 1, 0)
+SBP$study4 <- ifelse(SBP$trialdummy == 4, 1, 0)
+SBP$study5 <- ifelse(SBP$trialdummy == 5, 1, 0)
+SBP$study6 <- ifelse(SBP$trialdummy == 6, 1, 0)
+SBP$study7 <- ifelse(SBP$trialdummy == 7, 1, 0)
+SBP$study8 <- ifelse(SBP$trialdummy == 8, 1, 0)
+SBP$study9 <- ifelse(SBP$trialdummy == 9, 1, 0)
+SBP$study10 <- ifelse(SBP$trialdummy == 10, 1, 0)
+ancova.strat <- glm(sbpl ~ sbpi + treat + study1 + study2 + study3 + study4
++ study5 + study6 + study7 + study8 + study9
++ study10 - 1, data = SBP,
+family = gaussian(link = "identity"))
+ancova.strat.rand <- lmer(sbpl ~ sbpi + treat + study1 + study2 + study3 + study4
++ study5 + study6 + study7 + study8 + study9
++ study10 - 1 + (treat -1 | trialdummy), data = SBP)
+ancova.stratint.stratadj <- lmer(sbpl ~ sbpi*study1 + sbpi*study2 + sbpi*study3
++ study1 + study2 + study3 + treat - 1
++ (treat -1 | trialdummy),
+subset(SBP, trialdummy == 1 | trialdummy == 2 |
+trialdummy == 3))
+ancova.stratint.stratadj
+library('pbkrtest')
+model.above.without.treat <- lmer(sbpl ~ sbpi*study1 + sbpi*study2 + sbpi*study3
++ study1 + study2 + study3 - 1
++ (treat -1 | trialdummy),
+subset(SBP, trialdummy == 1 | trialdummy == 2 |
+trialdummy == 3))
+KRmodcomp(ancova.stratint.stratadj, model.above.without.treat)
+library(survival)
+library(survminer)
+library(dplyr)
+library(coxme)
+survIPD <- read_excel("SurvivalIPD.xls")
+surv_object <- Surv(survIPD$stime, survIPD$event)
+survIPD$trial1 <- ifelse(survIPD$trial == 1, 1, 0)
+survIPD$trial2 <- ifelse(survIPD$trial == 2, 1, 0)
+survIPD$trial3 <- ifelse(survIPD$trial == 3, 1, 0)
+survIPD$trial4 <- ifelse(survIPD$trial == 4, 1, 0)
+survIPD$trial5 <- ifelse(survIPD$trial == 5, 1, 0)
+survIPD$trial6 <- ifelse(survIPD$trial == 6, 1, 0)
+survIPD$trial7 <- ifelse(survIPD$trial == 7, 1, 0)
+survIPD$trial8 <- ifelse(survIPD$trial == 8, 1, 0)
+survIPD$trial9 <- ifelse(survIPD$trial == 9, 1, 0)
+survIPD$trial10 <- ifelse(survIPD$trial == 10, 1, 0)
+survIPD$trial11 <- ifelse(survIPD$trial == 11, 1, 0)
+survIPD$trial12 <- ifelse(survIPD$trial == 12, 1, 0)
+survIPD$trial13 <- ifelse(survIPD$trial == 13, 1, 0)
+survIPD$trial14 <- ifelse(survIPD$trial == 14, 1, 0)
+survIPD$trial15 <- ifelse(survIPD$trial == 15, 1, 0)
+survIPD$trial.f <- factor(survIPD$trial)
+is.factor(survIPD$trial.f)
+cox.naive <- coxph(surv_object ~ treat, data = survIPD, ties = c("breslow"))
+cox.naive
+cox.fix.clustered <- coxph(surv_object ~ treat + trial.f,
+data = survIPD, ties = c("breslow"))
+cox.fix.clustered
+cox.shared <- coxme(surv_object ~ treat + (1 | trial), data = survIPD, ties = c("breslow"))
+cox.strata <- coxph(surv_object ~ strata(trial.f) + treat,
+data = survIPD, ties = c("breslow"))
+cox.rand.clustered <- coxme(surv_object ~ treat + (treat | trial) + trial.f,
+data = survIPD, ties = c("breslow"))
+cox.rand.shared <- coxme(surv_object ~ treat + (1 + treat | trial),
+data = survIPD, ties = c("breslow"))
+setwd("C:/Work/IPD course/R datasets/Practical 3")
+SBP_summ <- read_excel("SBP_summary.xls")
+SBP_summ$varancova <- SBP_summ$seancova*SBP_summ$seancova
+meta.reg <- rma.uni(ancova, varancova, mods = prop_male, data = SBP_summ,
+method = "REML", test = "knha")
+ancova.reml <- rma.uni(ancova, varancova, data = SBP_summ, method = "REML",
+test = "knha")
+SBP <- read_excel("SBP.xls")
+SBP$trialdummy.f <- factor(SBP$trialdummy)
+is.factor(SBP$trialdummy.f)
+model.int <- lmer(sbpl ~ sbpi + treat*sex + trialdummy.f - 1 +
+(treat -1 | trialdummy), data = SBP)
+tab <- table(SBP$trialdummy, SBP$sex)
+tab
+p.tab <- prop.table(tab, margin = 1)
+p.tab
+dframe <- data.frame(values = rownames(tab), prop = p.tab[,2],
+count = tab[,2])
+dframe
+SBP$sex.cent <- SBP$sex - 0.7
+SBP$sex.cent <- ifelse(SBP$trialdummy == 2, SBP$sex - 0.35, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 3, SBP$sex - 0.24, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 4, SBP$sex - 0.55, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 5, SBP$sex - 0.59, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 6, SBP$sex - 0.42, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 7, SBP$sex - 0.43, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 8, SBP$sex - 0.26, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 9, SBP$sex - 0.64, SBP$sex.cent)
+SBP$sex.cent <- ifelse(SBP$trialdummy == 10, SBP$sex - 0.33, SBP$sex.cent)
+SBP$ws.interaction <- SBP$treat*SBP$sex.cent
+SBP$sex.mean <- 0.7
+SBP$sex.mean <- ifelse(SBP$trialdummy == 2, 0.35, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 3, 0.24, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 4, 0.55, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 5, 0.59, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 6, 0.42, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 7, 0.43, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 8, 0.26, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 9, 0.64, SBP$sex.mean)
+SBP$sex.mean <- ifelse(SBP$trialdummy == 10, 0.33, SBP$sex.mean)
+SBP$acr.interaction <- SBP$treat*SBP$sex.mean
+mod.int.within.across <- lmer(sbpl ~ sbpi + trialdummy.f + sbpi + sex + treat
++ ws.interaction + acr.interaction - 1
++ (treat -1 | trialdummy), data = SBP)
+mod.int.rand.interaction <- lmer(sbpl ~ sbpi + trialdummy.f + sbpi + sex + treat
++ ws.interaction + acr.interaction - 1
++ (treat + ws.interaction - 1 || trialdummy), data = SBP)
+summ_interact <- read_excel("SBP_summ_interact.xls")
+meta.int.dl <- metagen(est, se_est, trial, data = summ_interact,
+sm = "MD", comb.fixed = TRUE)
+meta.int.reml <- metagen(est, se_est, trial, data = summ_interact,
+sm = "MD", comb.random = TRUE, method.tau = "REML")
+setwd("C:/Work/IPD course/R datasets/Practical 4")
+trial_1 <- read_excel("Trial_1.xls")
+ancova.sbp <- glm(sbpl ~ sbpi + treat, data = trial_1,
+family = gaussian(link = "identity"))
+ancova.dbp <- glm(dbpl ~ dbpi + treat, data = trial_1,
+family = gaussian(link = "identity"))
+library(systemfit)
+r1 <- sbpl ~ sbpi + treat
+r2 <- dbpl ~ dbpi + treat
+fitsur <- systemfit(list(sbpreg = r1, dbpreg = r2), data = trial_1,
+method = "SUR")
+bloodpress <- function(data, indices){
+trial_1 = data[indices, ]
+reg1 <- glm(sbpl ~ sbpi + treat, data = trial_1)
+treat.coef.1 <- coef(summary(reg1))["treat", "Estimate"]
+reg2 <- glm(dbpl ~ dbpi + treat, data = trial_1)
+treat.coef.2 <- coef(summary(reg2))["treat", "Estimate"]
+regress.coeffs <- c(treat.coef.1, treat.coef.2)
+return(regress.coeffs)
+}
+set.seed(12345)
+results <- boot(data = trial_1, statistic = bloodpress, R = 2000)
+library(boot)
+set.seed(12345)
+results <- boot(data = trial_1, statistic = bloodpress, R = 2000)
+c1 <- cor(results$t[,1], results$t[,2], method = "pearson")
+c1
+surv_object <- Surv(trial_1$dl_st, trial_1$st)
+fully_part <- function(data, indices){
+trial_1 = data[indices, ]
+fit.coxph1 <- coxph(surv_object ~ smk + treat, data = trial_1)
+smk.coef.1 <- coef(summary(fit.coxph1))["smk", "coef"]
+fit.coxph2 <- coxph(surv_object ~ smk + treat + age + sex, data = trial_1)
+smk.coef.2 <- coef(summary(fit.coxph2))["smk", "coef"]
+regress.coeffs <- c(smk.coef.1, smk.coef.2)
+return(regress.coeffs)
+}
+set.seed(23456)
+results2 <- boot(data = trial_1, statistic = fully_part, R = 2000)
+corr2 <- cor(results2$t[,1], results2$t[,2], method = "pearson")
+corr2
+fibrin <- read_excel("fibrinogen.xls")
+univ.y1.reml <- metagen(y1, se1, study, data = fibrin,
+sm = "logHR", comb.random = TRUE, method.tau = "REML")
+univ.y1.reml2 <- mvmeta(y1, S = v11, data = fibrin, method = "reml")
+fib.mvmeta <- read_excel("mvmeta_data.xls")
+V <- bldiag(lapply(split(fib.mvmeta[,c("v1i", "v2i")], fib.mvmeta$study), as.matrix))
+biv.full.part <- rma.mv(yi, V, mods = ~ outcome - 1, random = ~ outcome | study,
+struct="UN", data=fib.mvmeta, method="REML")
+four.outcomes <- read_excel("four_outcomes.xls")
+y <- as.matrix(four.outcomes[2:5])
+S <- as.matrix(four.outcomes[6:15])
+model.four.outcomes <- mvmeta(y, S)
+exp(model.four.outcomes$coefficients)
+contr <- rbind("Y1 - Y2" = c(1, -1, 0, 0))
+lincom <- glht(model.four.outcomes, linfct = contr)
+lincom
+S[10,2] <- NA
+model.four.outcomes <- mvmeta(y, S)
+thromb <- read_excel("thromb.xls")
+net.data <- pairwise(treat, r, n, data = thromb, studlab = study, sm = "OR")
+net1 <- netmeta(net.data, sm = "OR", comb.random = TRUE, tol.multiarm = 0.0005)
+net1$pval.Q

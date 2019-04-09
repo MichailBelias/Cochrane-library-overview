@@ -1,0 +1,282 @@
+library(readxl)
+SBP_summary <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SBP summary.xls")
+View(SBP_summary)
+library(readxl)
+SBP <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SBP.xls")
+View(SBP)
+mean(sbpi)
+mean(SBP$sbpi)
+summary(SBP$sbpi)
+summary(SBP$sbpi, treat==0)
+summary(SBP$sbpi, treat==1)
+install.packages("dplyr") #in case you haven't installed already
+library(dplyr)
+data(iris) # store the famous iris database as an object
+groupDF <- group_by(iris, Species)
+summaryTable <- summarise(groupDF, meanSepalLength = mean(Sepal.Length),
+meanSepalWidth = mean(Sepal.Width),
+meanPetalLength = mean(Petal.Length),
+meanPetalWidth = mean(Petal.Width)
+)
+summaryTable
+groupTrial <- group_by(SBP, trialdummy)
+summaryTable <- summarise(groupTrial, meansbpi = mean(sbpi))
+summaryTable
+install.packages("dplyr") #in case you haven't installed already
+library(dplyr)
+groupTrial <- group_by(SBP, trialdummy)
+summaryTable <- summarise(groupTrial, meansbpi = mean(sbpi))
+summaryTable
+View(SBP)
+meansbpi_1 <- mean(SBP$sbpi, subset(SBP$trialdummy = 1))
+meansbpi_1 <- mean(SBP$sbpi, subset(SBP$trialdummy == 1))
+library(plyr)
+library(reshape2)
+install.packages("plyr") #in case you haven't installed already
+install.packages("reshape2") #in case you haven't installed already
+library(plyr)
+library(reshape2)
+View(SBP)
+meansbp <- melt(SBP, id.vars = c("trialdummy", "sbpi"))
+meansbp
+View(summaryTable)
+ddply(meansbp, c("trialdummy", "sbpi"), summarise,
+mean = mean(value))
+mean(subset(SBP, trialdummy == 1 & treatment == 1))
+mean(subset(SBP, trialdummy == 1 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 1 & treat == 0)$sbpi)
+mean(subset(SBP, trialdummy == 2 & treat == 1)$sbpi)
+mean(subset(SBP, trialdummy == 2 & treat == 0)$sbpi)
+lr1 <- glm(sbpl ~ sbpi treat, subset(SBP, trialdummy==1),
+family = gaussian(link = "identity"))
+lr1 <- glm(sbpl ~ sbpi + treat, subset(SBP, trialdummy==1),
+family = gaussian(link = "identity"))
+summary(lr1)
+exp(lr1$coefficients)
+lr2 <- glm(sbpl ~ treat, subset(SBP, trialdummy==1),
+family = gaussian(link = "identity"))
+summary(lr2)
+lr3 <- glm(diff ~ treat, subset(SBP, trialdummy==1),
+family = gaussian(link = "identity"))
+summary(lr3)
+SBP <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SBP summary.xls")
+SBP_summary <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SBP summary.xls")
+library(readxl)
+SBP_summary <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SBP summary.xls")
+SBP_summary <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SBP_summary.xls")
+View(SBP_summary)
+install.packages("meta")
+library(meta)
+meta.ran.dl <- metagen(ancova, seancova, trialdummy, data = SBP_summary,
+sm = "MD", method.tau = "DL")
+meta.ran.dl <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "DL")
+meta.ran.dl
+for.ran.dl <- forest(meta.ran.dl, comb.fixed = FALSE,
+label.left = "Favours control",
+label.right = "Favours experimental",
+col.label.right = "green",
+col.label.left = "red",
+prediction = FALSE,
+leftlabs = c("StudyID", "ancova", "seancova"),
+rightcols = c("effect.ci"))
+for.ran.dl <- forest(meta.ran.dl, comb.fixed = FALSE,
+label.left = "Favours experimental",
+label.right = "Favours control",
+col.label.right = "green",
+col.label.left = "red",
+prediction = FALSE,
+leftlabs = c("StudyID"),
+rightcols = c("effect.ci"))
+for.ran.dl <- forest(meta.ran.dl, comb.fixed = FALSE,
+label.left = "Favours experimental",
+label.right = "Favours control",
+col.label.right = "green",
+col.label.left = "red",
+prediction = FALSE,
+leftlabs = c("StudyID", "logOR", "selogOR"),
+rightcols = c("effect.ci"))
+meta.ran.reml <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "REML")
+meta.ran.reml
+meta.ran.reml <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "REML")
+install.packages("metafor")
+library(metafor)
+meta.ran.reml <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "REML")
+meta.ran.reml
+meta.ran.reml.hk <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "REML", hakn = TRUE)
+meta.ran.reml.hk
+meta.ran.dl.hk <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "DL", hakn = TRUE)
+meta.ran.dl.hk
+meta.ran.dl.hk <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "DL", hakn = TRUE,
+prediction = TRUE)
+meta.ran.dl.hk
+meta.ran.dl.hk <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "DL",
+prediction = TRUE)
+meta.ran.dl.hk
+meta.ran.dl.pred <- metagen(ancova, seancova, trial, data = SBP_summary,
+sm = "MD", method.tau = "DL", prediction = TRUE)
+meta.ran.dl.pred
+library(readxl)
+survIPD <- read_excel("C:/Work/IPD course/R datasets/Practical 1/SurvivalIPD.xls")
+View(survIPD)
+View(survIPD)
+install.packages("survival")
+install.packages("survminer")
+library(survival)
+library(survminer)
+library(dplyr)
+View(survIPD)
+surv_object <- Surv(time = survIPD$stime, event = survIPD$event)
+surv_object
+fit1 <- survfit(surv_object ~ treat, data = survIPD)
+summary(fit1)
+ggsurvplot(fit1, data = survIPD, pval = TRUE)
+ggsurvplot(fit1, data = survIPD, pval = TRUE, subset(survIPD, trial==1))
+ggsurvplot(fit1, data = subset(survIPD, trial == 1), pval = TRUE)
+fit1 <- survfit(surv_object ~ treat, data = subset(survIPD, trial == 1))
+fit.coxph <- coxph(surv_object ~ treat,
+subset(survIPD, trial == 1))
+fit.coxph <- coxph(surv_object ~ treat, data = survIPD)
+ggforest(fit.coxph, data = survIPD)
+summary(fit.coxph)
+fit.coxph <- coxph(surv_object ~ treat, data = survIPD,
+subset(survIPD, trial == 1))
+fit.coxph <- coxph(surv_object ~ treat, data = survIPD,
+subset(trial == 1))
+fit.coxph <- coxph(surv_object ~ treat, subset(survIPD, trial == 1))
+fit1 <- survfit(surv_object ~ treat, data = subset(survIPD, trial == 1))
+fit1 <- survfit(surv_object ~ treat, subset(survIPD, trial == 1))
+surv_object <- Surv(time = survIPD$stime[trial==1], event = survIPD$event)
+surv_object <- Surv(survIPD$stime, survIPD$event)
+fit.coxph <- coxph(surv_object ~ treat, data = survIPD)
+fit.coxph <- coxph(surv_object ~ treat, subset(survIPD, trial == 1))
+fit.coxph <- coxph(surv_object ~ treat, data = survIPD)
+fit.coxph <- coxph(surv_object ~ treat, subset=(trial == 1))
+fit.coxph <- coxph(surv_object ~ treat, subset=(survIPD$trial == 1))
+fit.coxph <- coxph(surv_object ~ treat, data = survIPD, subset=(survIPD$trial == 1))
+summary(fit.coxph)
+fit_coxph2 <- coxph(surv_object ~ treat, data = survIPD, subset=(survIPD$trial == 2))
+summary(fit_coxph2)
+surv_summary <- read_excel("C:/Work/IPD course/R datasets/Practical 1/surv_summary.xls")
+View(surv_summary)
+summ_surv <- read_excel("C:/Work/IPD course/R datasets/Practical 1/surv_summary.xls")
+View(summ_surv)
+meta.ran.dl <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "DL")
+meta.ran.dl
+exp(meta.ran.dl$coefficients)
+summary(meta.ran.dl)
+exp(meta.ran.dl$coefficients)
+meta.ran.ml <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "ML")
+meta.ran.ml
+meta.ran.reml <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "REML")
+meta.ran.reml
+meta.ran.dl.hksj <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "DL", hakn = TRUE)
+summary(meta.ran.dl.hksj)
+meta.ran.reml.hksj <- metagen(loghr, seloghr, trial, data = summ_surv,
+sm = "hr", method.tau = "REML", hakn = TRUE)
+summary(meta.ran.reml.hksj)
+setwd("C:/Work/IPD course/R datasets/Practical 2")
+library(readxl)
+eryt <- read_excel("eryt.xls")
+View(eryt)
+eryt$study1 <- ifelse(eryt$studyid == 1, 1, 0)
+eryt$study2 <- ifelse(eryt$studyid == 2, 1, 0)
+eryt$study3 <- ifelse(eryt$studyid == 3, 1, 0)
+library(lme4)
+glmm2 <- glmer(dvt ~  eryt + (1 + eryt | studyid) , data = eryt,
+family = binomial, nAGQ = 7)
+summary(glmm2)
+glmm2 <- glmer(dvt ~  eryt + (1 + eryt | studyid) , data = eryt,
+family = binomial)
+summary(glmm2)
+glmm2 <- glmer(dvt ~  eryt + (1 + eryt || studyid) , data = eryt,
+family = binomial)
+summary(glmm2)
+SBP <- read_excel("C:/Work/IPD course/R datasets/Practical 2/SBP.xls")
+SBP$study1 <- ifelse(SBP$trialdummy == 1, 1, 0)
+SBP$study2 <- ifelse(SBP$trialdummy == 2, 1, 0)
+SBP$study3 <- ifelse(SBP$trialdummy == 3, 1, 0)
+SBP$study4 <- ifelse(SBP$trialdummy == 4, 1, 0)
+SBP$study5 <- ifelse(SBP$trialdummy == 5, 1, 0)
+SBP$study6 <- ifelse(SBP$trialdummy == 6, 1, 0)
+SBP$study7 <- ifelse(SBP$trialdummy == 7, 1, 0)
+SBP$study8 <- ifelse(SBP$trialdummy == 8, 1, 0)
+SBP$study9 <- ifelse(SBP$trialdummy == 9, 1, 0)
+SBP$study10 <- ifelse(SBP$trialdummy == 10, 1, 0)
+lm1 <- glm(sbpl ~ sbpi + treat + study1 + study2 + study3 + study4
++ study5 + study6 + study7 + study8 + study9
++ study10 - 1, data = SBP,
+family = gaussian(link = "identity"))
+summary(lm1)
+lm2 <- lmer(sbpl ~ sbpi + treat + study1 + study2 + study3 + study4
++ study5 + study6 + study7 + study8 + study9
++ study10 - 1 + (treat -1 | trialdummy), data = SBP)
+summary(lm2)
+install.packages('nlme')
+library('nlme')
+install.packages("nlme")
+install.packages("nlme")
+install.packages("nlme")
+install.packages("nlme")
+View(SBP)
+SBP <- read_excel("C:/Work/IPD course/R datasets/Practical 2/SBP.xls")
+View(SBP)
+library(readxl)
+SBP <- read_excel("C:/Work/IPD course/R datasets/Practical 2/SBP.xls")
+View(SBP)
+SBP <- read_excel("C:/Work/IPD course/R datasets/Practical 2/SBP.xls")
+View(SBP)
+SBP$study1 <- ifelse(SBP$trialdummy == 1, 1, 0)
+SBP$study2 <- ifelse(SBP$trialdummy == 2, 1, 0)
+SBP$study3 <- ifelse(SBP$trialdummy == 3, 1, 0)
+SBP$study4 <- ifelse(SBP$trialdummy == 4, 1, 0)
+SBP$study5 <- ifelse(SBP$trialdummy == 5, 1, 0)
+SBP$study6 <- ifelse(SBP$trialdummy == 6, 1, 0)
+SBP$study7 <- ifelse(SBP$trialdummy == 7, 1, 0)
+SBP$study8 <- ifelse(SBP$trialdummy == 8, 1, 0)
+SBP$study9 <- ifelse(SBP$trialdummy == 9, 1, 0)
+SBP$study10 <- ifelse(SBP$trialdummy == 10, 1, 0)
+model1 <- lme(
+sbpl ~ study1 + study2 + study3 + sbpi + treat - 1,
+random = ~ trialdummy | patid,
+correlation = corCompSymm(form = ~ patid | trialdummy),
+data = SBP, method = "REML"
+)
+library('nlme')
+model1 <- lme(
+sbpl ~ study1 + study2 + study3 + sbpi + treat - 1,
+random = ~ trialdummy | patid,
+correlation = corCompSymm(form = ~ patid | trialdummy),
+data = SBP, method = "REML"
+)
+install.packages('nlme')
+library('nlme')
+install.packages("nlme")
+install.packages("nlme")
+install.packages("nlme")
+install.packages("nlme")
+model1 <- lme(
+sbpl ~ study1 + study2 + study3 + sbpi + treat - 1,
+random = ~ trialdummy | patid,
+correlation = corCompSymm(form = ~ patid | trialdummy),
+data = SBP, method = "REML"
+)
+?nlme
+require(nlme)
+model1 <- lme(
+sbpl ~ study1 + study2 + study3 + sbpi + treat - 1,
+random = ~ trialdummy | patid,
+correlation = corCompSymm(form = ~ patid | trialdummy),
+data = SBP, method = "REML"
+)
