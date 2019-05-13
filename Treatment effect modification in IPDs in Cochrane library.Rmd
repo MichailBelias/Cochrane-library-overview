@@ -1,7 +1,7 @@
 ---
-title: "Treatment effect modification in individual participant data meta-analysis: a scoping review (or an overview)"
+title: "Individual participant data meta-analysis. When? Why? How? A scoping review"
 author: "Michail Belias"
-date: "April 7, 2019"
+date: "May 13, 2019"
 output:
   pdf_document: default
   html_document: default
@@ -10,24 +10,26 @@ bibliography: Style and bibliography/bibliography2.bib
 
 
 
-# Abstract 
+*I used the BMC Medical Research Methodology format*
+
+# Abstract (200 words)
 
 ## Background
-Individual participant data(IPD) meta-analysis(MA) is considered the gold standard to investigate treatment effect modification. Multiple methods have been developed involving both one-stage and two-stage approaches. Literature over the advantages and disadvantages of these approaches is available. Nevertheless, it is unclear to what level researchers have adopted this guidance.
+Individual participant data(IPD) meta-analysis(MA) of randomised clinical trials (RCTs) offers advantages over aggregate MA and single RCTs. IPD-MA is considered the gold standard for evidence based inference especially when personalised treatment decision making is involved. Nevertheless, IPD-MA needs careful modelling and statistical expertise. Although literature over the advantages and disadvantages of the available statistical methods is available, it is unclear to what extent researchers have adopted this guidance. Our objective is to conduct a scoping review of existing IPD-MA methods, and summarise their properties. Furthemore, we aim to inform when and how IPD-MA are performed and whether state-of the art methods have been used.  
 
-## Objective
+## Methods 
 
-Our aim is to identify which approaches are applied in order to investigate effect modification in IPD-MA. Furthermore, we aim to evaluate the quality of these published articles and inform over the best practice. 
-
-## Methods
-
-We reviewed IPD-MAs found in the Cochrane IPD-MA methods group. We identified 165 IPD-MA that included randomised clinical trials. 
+We searched MEDLINE and the Cochrane Library **we may put more  databases** . We included IPD-MA of RCTs published from 01/01/2010 to February 2019.
 
 ## Results
 
+Out of 4137 results we identified 720 papers **until now** including RCTs only with at least one treament comparison. A short decline in the published IPD-MAs in 2018 has been showed. The two most prodominant medical fields were Cancer *(16%)*, Cardiovascular diseases *(16%)* and Mental health *(10%)*. Effect modification was investigate in most of the articles (85%) though only in a few was that described in their goals. One-stage methods with mixed-effect models are increasing in numbers per year, while subgroup analysis is decreasing. Two-stage methods are almost constant. Although, modelling techinque used is often reported, it is unclear what type specifically was used. *For instance, some report a one-stage mixed effects model has been used to account for within trial clustering, but they don't provide more info such as (stratified or random effects intercept is the interaction term random effects or fixed? etc)*
+
+
+
 ## Conclusions
 
-We conclude that 1) common terminology should be adapted, 2) centred one-stage IPD-MA should be preferred 
+
 
 
 \newpage
