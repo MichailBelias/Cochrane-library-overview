@@ -1,0 +1,28 @@
+---
+title: "Back-up"
+author: "Michail Belias"
+date: "May 20, 2019"
+output: html_document
+---
+
+  
+  
+  We investigated whether effect modification has been investigated and how in meta-analyses with individual participant data available. Since numerous IPD-MAs are conducted worldwide we narrowed our search into cochrane methods IPD meta-analysis group. Therefore, our sample may not be representative for all IPD-MAs worldwide, but for high quality IPD-MAs. 
+
+We searched in the Cochrane library for IPD meta-analyses (https://methods.cochrane.org/ipdma/ipd-meta-analyses). The cochrane library for IPD-MA is divided into 18 medical fields (Cancer, Cardiovascular disease, Child health, Ear nose and throat, Endocrine and metabolic, Eyes and vision, Gastroenterology, Gynaecology, Infectious disease, Lungs and airways, Mental health, Multiple clinical areas, Neonatal care, Neurology, Pregnancy and childbirth, Renal disease, Rheumatology, Wounds). In total 202 studies are reported from 1991 to 2018. Almost half of them (96) were investigating some type of cancer(47.25%). 34 studies were over cardiovascular diseases, 16 over Neurology and 10 over Pregnancy and childbirth. All other medical fields had less than 10. Particularly, 1 was over Child health, 5 Ear nose and throat, 1 Endocrine and metabolic, 2 Eyes and vision,5 Gastroenterology, 5 Gynaecology, 3 Infectious disease, 1 Lungs and airways, 9 Mental health, 1 Multiple clinical areas, 3 Neonatal care, 10 Pregnancy and childbirth, 6 Renal disease, 2 Rheumatology, 2 Wounds. Out of the 201 studies we excluded 11 as they were ongoing and no-results were showed and 26 studies from the Cardiovascular category, as 10 were investigating risk factors and 16 prevention methods. 
+
+  Cancer related studies were further divided into 14 categories depending on the infected organ, see Figure 1. 
+ 
+  
+Nevertheless, the one treatment fits all may not be true. Different patients characteristics may alter the effect of a treatment. These characteristics are often called effect modifiers and their investigation can lead to better clinical decision-making, whether to treat or not a patient. Effect modifier can be either categorical (Smoking (Yes/No), Age group (<30,30-60,60+), ethnicity (Caucasian, Black, Asian) ) or continuous (Age, blood pressure, tumour diameter). In the first case the potential effect modifier may be detected either by measuring the treatment effect across its levels [@Altman_2003] or by introducing interaction terms in a (generalised) linear model. Apparently, the first choice may be performed only with categorical effect modifiers where both approaches coincide. Nevertheless, that is not true in IPD-MA, where pooling per-subgroup the across trials estimates and then comparing them, we will produce different results than pooling the across trials interaction terms [@Fisher_2011]. On the other hand, continuous effect modifiers are not without challenges, as modelling the functional shape of their association with the outcome may be needed. One approach is to neglect that and either categorise the continuous effect modifier or make linearity assumptions. Nevertheless, both approaches have been criticized.
+ 
+\  A straight forward approach is to include more than one RCTs in 
+  
+  
+  Given that data originate from different sources heterogeneity should be investigated and adjusted for, in order to end up with unbiased results. Therefore, it is essential to account for within study clustering of the participants [@Riley_2010]. This can be accomplished either by performing a two-stage IPD-MA or by fitting a multi-level (mixed effects) model accounting for the within study clustering of patients through random intercept and/or slope.
+  
+ In two-stage IPD-MA, a first stage each trial is analysed separately using an appropriate statistical model and thus estimating an effect of interest. Subsequently these effects are pooled into a summary estimate in the second stage of the meta-analysis. Another approach is to perform a one-stage IPD-MA, whilst accounting for the clustering of participants within studies with a combination of random intercepts and/or slopes.
+
+  Although guidelines exist on how to investigate effect modification in both categorical and continuous variables, it is unclear to what extent these are followed.  Our goal is perform a scoping review on IPD-MAs and report whether 1)  effect modification has been investigated 2) which method was chosen (one or two-stage IPD-MA) 3) whether the effect modifier was categorical or continuous and 4) which modelling assumptions were made (Centring per trial, categorisation, linearity assumptions etc). Since IPD-MA is a challenging task we searched for IPD-MAs in the Cochrane IPD-MA methods, as all their IPD-MAs involve at least one statistician member of their IPD.  and report if they investigated for effect modification over patient level characteristics. We chose the Cochrane library as Cochrane reviews and meta-analyses are considered on average of high quality. 
+  Finally, IPD-MA may be conducted either in one or two stages [@Debray_2015]. In two-stage IPD-MA, each study is first analysed separately, using an appropriate statistical model. Subsequently, the results extracted in the first stage are pooled into a summary estimate in the second stage of the meta-analysis. In the other hand, one-stage IPD-MA can be conducted with mixed effects model adjusting for within trial clustering. 
+  
