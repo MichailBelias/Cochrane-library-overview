@@ -1,0 +1,69 @@
+---
+title: "Letter of request"
+author: "Michail Belias"
+date: "May 20, 2019"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+
+# Background
+
+Individual participant data (IPD) meta-analysis (MA) of randomized clinical trials (RCTs) combines two gold standards and offers great opportunities. One of them is the chance to detect potential treatment effect modification by a co-variable. Nevertheless, analyzing data with multilevel structure is not an easy task and careful modeling is needed in order to separate within and across trial information. Investigating treatment effect modification over continuous co-variables is even more challenging, as an appropriate functional form should be investigated at the same time. Heretofore, simplistic approaches are applied, for instance through categorization or by making linear assumptions. Nevertheless, this may lead to biased results and therefore incorrect personalized treatment decisions. For these challenges limited guidance is available and consequently we aim to write a guide on how to deal with them. 
+
+# What are we looking for
+
+Particularly, we are looking for clustered data that include at least one continuous potential effect modifier with non-linear association with the outcome and/or non-linear interaction with the treatment.
+
+# Analysis that will be performed
+
+We will use smoothing splines for modeling, as they make less assumptions compared to fractional polynomials and piece-wise polynomials. Furthermore, we will calculate absolute treatment effect differences rather than relative, since decisions to treat subgroups of patients differently are driven by absolute differences and effect modification may not be summarized a single constant interaction term. In order to take into account within trial clustering we will perform IPD-MA using both one-stage and a two stage approaches and point out their differences. 
+
+
+## Two-stage approach
+
+### First stage
+
+1.We will fit smoothing splines model per trial.
+For one continuous co-variable the statistical model is
+ 
+$Y_{ij}$ =  $f_{1j}(X_{ij})$ + $f_{2j}(X_{ij})$ × $Treatment_{ij}$
+
+$f_{1j}$ : the functional form for the controls
+
+$f_{2j}$ : the functional form for the interactions
+ 
+2.We will calculate the treatment effect difference (note that this will be a function rather than an estimate) for given X
+
+$\hat Y_{Tj} (X)$ - $\hat Y_{Cj} (X)$ = $f_{2j}(X)$
+
+
+3.We will pool $f_{2j}(X)$ using pointwise meta-analytic methods.
+
+
+# One-stage approach
+
+We will fit a generalized additive mixed effects model with smoothing splines fit.
+
+$Y_{ij} =  f_{1j}(X_{ij}) + f_{2j}(X_{ij}) \times Treatment_{ij}$
+
+And then calculate the treatment effect differences.
+
+Here the functional form will be estimated simultaneously while accounting for within trial clustering of the patients. 
+As this approach needs careful modeling, in order to avoid amalgamating within and across trial information the continuous co-variable will be centred. 
+
+# What is new? 
+
+Published IPD-MAs of RCTs nearly never take into account non-linearity, even in cases where the effect modifier is known - through observational studies- to be associated with the outcome with a “non-linearly”. The reason may be that RCTs are typically designed to barely have significant power to detect an overall treatment effect. Nevertheless, due to IPD-MA we have the opportunity test for interactions and for different functional forms.
+
+# What is next?
+
+As a subsequent step we may combine RCTs and observational studies. 
+
+# Why sharing?
+
+We believe that your contribution and our subsequent co-operation will be mutually beneficial. Besides the fact that our approach is novel, being a co-author will give us the opportunity to share ideas over state of the art approaches in IPD-MA. Furthermore, this can be the start of further co-operation and data-sharing. 
+ 
+
+
