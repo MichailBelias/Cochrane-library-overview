@@ -3,9 +3,9 @@ title: "Individual participant data meta-analysis. When? Why? How? A scoping rev
 author: "Michail Belias"
 date: "May 13, 2019"
 output:
+  pdf_document: default
   word_document:
     reference_docx: templatePaper.docx
-  pdf_document: default
   html_document: default
 bibliography: Style and bibliography/bibliography2.bib
 ---
@@ -90,31 +90,75 @@ library(kableExtra)
 IPD_MA <- read_xlsx("IPD-MA Cochrane papers/6. Data/New search in Pubmed.xlsx",  sheet = 1)
 IPD_MA <- as.data.frame(IPD_MA)
 
-kable(table(IPD_MA$`General Medical Field`), caption = "Figure 1","latex",col.names = c("Medical field" , "Frequencies"), booktabs = T)  %>%
-kable_styling(position = "float_left")
+kable(table(IPD_MA$`General Medical Field`), caption = "Table 1","latex",col.names = c("Medical field" , "Frequencies"), booktabs = T)  %>%
+kable_styling(position = "left")
 
 ```
   
 \newpage 
 #####
 
- 
-
 ```{r}
 names(IPD_MA) = gsub(x = names(IPD_MA), pattern = " ", replacement = ".")
 
 IPD_MA$Number.of.Studies= as.numeric(IPD_MA$Number.of.Studies)
 
-gghistogram(data = IPD_MA, x =  "Number.of.Studies", y = "..count..",bins = 30, ggtheme = theme_minimal(), title = "Number of trials included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )  + annotate(geom="text", x=15, y=20, label= paste("median:", median(IPD_MA$Number.of.Studies,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic"))
+library(dplyr)
+IPD_Year_frequencies = IPD_MA %>%
+  group_by(Year)%>%
+  summarise(Frequencies=n())
+IPD_Year_frequencies$estimated = rep("No")
+IPD_Year_frequencies[6,] = c(2019, 350, "Yes" )
+IPD_Year_frequencies$estimated =  factor(IPD_Year_frequencies$estimated, levels = c("Yes","No"))
+
+ggbarplot(data = IPD_Year_frequencies, x =  "Year", y = "Frequencies", fill = "estimated",label = F,palette = "jco",
+          ggtheme = theme_minimal(), title = "Number of IPD-MAs performed per year", caption =  "Figure 1.",xlab = "Year" ) + 
+    theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic") ,
+          plot.subtitle = element_text(hjust = 0.5,size = 12, face = "bold.italic"))+ geom_text( aes(label=Frequencies), vjust=c(1.5,1.5,1.5,1.5,1.5,-13))
+
+```
+
+
+ 
+
+
+```{r}
+gghistogram(data = IPD_MA, x =  "Number.of.Studies", y = "..count..",bins = 30, palette = "jco",
+            ggtheme = theme_minimal(), title = "Number of trials included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )  + annotate(geom="text", x=15, y=20, label= paste("median:", median(IPD_MA$Number.of.Studies,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic"))
+
+
+```
+
+
+```{r}
 
 
 IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
-IPD_MA$Year = as.numeric(IPD_MA$Year)
 
-gghistogram(IPD_MA, x = "Year", y = "..count..", gtheme = theme_minimal(), 
-            title = "Number of individual participants data meta-analysis per year",
-            xlab = "Year",caption ="Figure 1", subtitle = "2019 data are until May" )+
-geom_text(stat='count', aes(label=..count..), vjust=-0.25)
+IPD_MA %>%
+  filter(Type.of.studies.included == "RCTs") %>%
+gghistogram( x =  "Number.of..Patients", y = "..count..",bins = 30, palette = "jco",
+            ggtheme = theme_minimal(), title = "Number of participants included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )+ theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic"))
+
+```
+
+
+
+```{r}
+
+
+IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
+
+IPD_Outcome_frequencies = as.data.frame(matrix(data = c("Binary","Continuous","Time-to-Event",11,5,4), ncol = 2,dimnames =  list(1:3, c("Type of primary outcome" ,"Frequencies"))))
+kable(IPD_Outcome_frequencies, caption = "Table 2","latex",col.names = c("Type of primary outcome" , "Frequencies"), booktabs = T)  %>%
+kable_styling(position = "left")
+
+```
+
+```{r}
+
+
+
 
 
 ```
