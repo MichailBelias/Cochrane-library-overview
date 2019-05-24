@@ -3,10 +3,12 @@ title: "Individual participant data meta-analysis. When? Why? How? A scoping rev
 author: "Michail Belias"
 date: "May 13, 2019"
 output:
+  word_document:
+    reference_docx: templatePaper.docx
   pdf_document: default
-  word_document: default
   html_document: default
 bibliography: Style and bibliography/bibliography2.bib
+
 ---
 
 ```{r echo=F}
@@ -20,6 +22,8 @@ opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',
 
 
 # Abstract (200 words)
+
+######
 
 ## Background
 Individual participant data(IPD) meta-analysis(MA) is considered the gold standard for evidence based inference. It is well established that IPD-MA offers great advantages compared to aggregate MA and single studies. Nevertheless, it is unclear which advantages are mostly addressed when IPD-MAs are conducted.  Furthermore, it is unclear which statistical approaches are preferred, how they are the results presented, which medical fields are involved and to what extent guidelines are followed. **Objective:** Our objective is to conduct a scoping review of existing IPD-MA, and summarise their properties. Furthermore, we aim to inform when and how IPD-MA are performed, whether state-of the art methods are used and whether they are clearly described. 
