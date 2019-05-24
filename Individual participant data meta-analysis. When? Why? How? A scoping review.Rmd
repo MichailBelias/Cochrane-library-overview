@@ -73,14 +73,14 @@ We searched in MEDLINE, PubMed, Cochrane library **(we can place more)** for IPD
 
 ## Data extraction and statistical analysis
 
-For all eligible papers we extracted information that was classified in three  categories: 1) the reporting of the IPD-MA (such as the medical field, number of included studies and participants, the goal described in the abstract); 2) the statistical analysis of the IPD-MA (type of outcome,type of statistical approach,descriptions of methods, and assessment of heterogeneity); and 3) the reporting of the results (forest-plots, how many comparisons were performed, proportion of statistically significant, reporting of subgroup analyses and/or interaction terms) and  4) 
+For all eligible papers we extracted information that was classified in three  categories: 1) the reporting of the IPD-MA (such as the medical field, number of included studies and participants, the goal described in the abstract); 2) the statistical analysis of the IPD-MA (type of outcome,type of statistical approach,descriptions of methods, and assessment of heterogeneity); and 3) the reporting of the results (forest-plots, how many comparisons were performed, proportion of statistically significant, reporting of subgroup analyses and/or interaction terms) and 4) when 
 
 \newpage
 
 ######
 # Results
 
-We identified 1538 IPD-MAs.  
+We identified 1538 publised IPD-MAs. Of these 
 
 ```{r }
 library(readxl)
@@ -98,7 +98,7 @@ kable_styling(position = "float_left")
 \newpage 
 #####
 
-mpla mpla
+ 
 
 ```{r}
 names(IPD_MA) = gsub(x = names(IPD_MA), pattern = " ", replacement = ".")
