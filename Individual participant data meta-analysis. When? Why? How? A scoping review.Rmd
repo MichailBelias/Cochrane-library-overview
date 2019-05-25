@@ -2,11 +2,26 @@
 title: "Individual participant data meta-analysis. When? Why? How? A scoping review"
 author: "Michail Belias"
 date: "May 13, 2019"
+header-includes:
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{xcolor}
 output:
-  pdf_document: default
   word_document:
     reference_docx: templatePaper.docx
   html_document: default
+  pdf_document: default
 bibliography: Style and bibliography/bibliography2.bib
 ---
 
@@ -80,7 +95,7 @@ For all eligible papers we extracted information that was classified in three  c
 ######
 # Results
 
-We identified 1538 publised IPD-MAs. Of these 
+We identified 1538 published IPD-MAs. Of these 
 
 ```{r }
 library(readxl)
@@ -92,7 +107,6 @@ IPD_MA <- as.data.frame(IPD_MA)
 
 kable(table(IPD_MA$`General Medical Field`), caption = "Table 1","latex",col.names = c("Medical field" , "Frequencies"), booktabs = T)  %>%
 kable_styling(position = "left")
-
 ```
   
 \newpage 
@@ -146,24 +160,32 @@ gghistogram( x =  "Number.of..Patients", y = "..count..",bins = 30, palette = "j
 
 ```{r}
 
-
+library(magick)
 IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
 
 IPD_Outcome_frequencies = as.data.frame(matrix(data = c("Binary","Continuous","Time-to-Event",11,5,4), ncol = 2,dimnames =  list(1:3, c("Type of primary outcome" ,"Frequencies"))))
 kable(IPD_Outcome_frequencies, caption = "Table 2","latex",col.names = c("Type of primary outcome" , "Frequencies"), booktabs = T)  %>%
-kable_styling(position = "left")
+kable_styling(position = "left",bootstrap_options = c("striped", "hover")) 
 
 ```
 
 ```{r}
 
-library(readxl)
-Summary_of_heterogeneity_assessment_across_reviews <- read_excel("IPD-MA Cochrane papers/6. Data/Summary of heterogeneity assessment across reviews.xlsx")
+Het_table <- read_excel("IPD-MA Cochrane papers/6. Data/Heterogeneity.xlsx")
+colnames(Het_table)[1] = "  "
 
-colnames(Summary_of_heterogeneity_assessment_across_reviews)[1] = "  "
+Het_table[is.na(Het_table) ] = " "
 
-Summary_of_heterogeneity_assessment_across_reviews[is.na(Summary_of_heterogeneity_assessment_across_reviews)] <- " "
-kable(Summary_of_heterogeneity_assessment_across_reviews)``
+kable(Het_table,caption = "Table 3", "latex")
+```
+
+
+```{r}
+
+
+```
+
+
 
 
 \newpage
