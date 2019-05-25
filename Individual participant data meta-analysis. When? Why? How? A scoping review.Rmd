@@ -157,11 +157,13 @@ kable_styling(position = "left")
 
 ```{r}
 
+library(readxl)
+Summary_of_heterogeneity_assessment_across_reviews <- read_excel("IPD-MA Cochrane papers/6. Data/Summary of heterogeneity assessment across reviews.xlsx")
 
+colnames(Summary_of_heterogeneity_assessment_across_reviews)[1] = "  "
 
-
-
-```
+Summary_of_heterogeneity_assessment_across_reviews[is.na(Summary_of_heterogeneity_assessment_across_reviews)] <- " "
+kable(Summary_of_heterogeneity_assessment_across_reviews)``
 
 
 \newpage
