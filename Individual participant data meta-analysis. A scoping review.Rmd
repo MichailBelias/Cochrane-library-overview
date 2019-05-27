@@ -20,16 +20,29 @@ header-includes:
 output:
   word_document:
     reference_docx: templatePaper.docx
-  html_document: default
   pdf_document: default
+  html_document: default
 bibliography: Style and bibliography/bibliography2.bib
+always_allow_html: yes
 ---
 
 ```{r echo=F}
 
 library(knitr)
+library(tinytex)
+library(pander)
+panderOptions('table.alignment.default', function(df)
+    ifelse(sapply(df, is.numeric), 'right', 'left'))
+panderOptions('table.split.table', Inf)
+panderOptions('big.mark', ",")
+panderOptions('keep.trailing.zeros', TRUE)
+panderOptions("table.alignment.default", value = "left")
 
 opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',echo=F, warning=FALSE, message=FALSE)
+
+
+Sys.setenv(PATH = paste(Sys.getenv("PATH"), "/usr/bin/gs" ,"", sep=.Platform$path.sep)) 
+
 ```
 
 
@@ -65,7 +78,11 @@ Subgroups analysis is the primary goal of IPD-MAs.
 ######
 # Introduction
 
-  Meta-analysis (MA) is a statistical method that involves combining information from multiple sources. While initially, meta-analyses were limited in aggregated data (AD) in the early 1990s individual participant data meta-analysis (IPD-MA or IPDMA) was introduced [@CHALMERS_1993]. In IPD-MA the participant level information is available and therefore evidence from multiple studies can be analysed centrally. Collecting the IPD may be a difficult and time consuming task, but nevertheless IPD-MA is considered the gold standard in evidence synthesis [@Stewart_1993 ; @Stewart_1995 ;@Stewart_2002] and offers great opportunities [@van_Walraven_2010] that in AD-MA are considered impossible. Besides when investigating overall treatment effects where AD-MA and IPD-MA are mathematically equivalent, IPD-MA offers (1) the possibility to standardize subgroup definitions and outcomes across studies, (2) higher validity and credibility of subgroup findings, (3) increased flexibility to search for subgroups based on combinations of patient and/or disease characteristics (4) the possibility to avoid ecological BIAS (5) investigate non-linear functional forms (6) training better prediction models and (7) efficiently synthesizing evidence from different designs. *we can place extra stuff*
+  Meta-analysis (MA) is a statistical method that involves combining information from multiple sources. While initially, meta-analyses were limited in aggregated data (AD) in the early 1990s individual participant data meta-analysis (IPD-MA or IPDMA) was introduced [@CHALMERS_1993]. In IPD-MA the participant level information is available and therefore evidence from multiple studies can be analysed centrally. Collecting the IPD may be a difficult and time consuming task, but nevertheless IPD-MA is considered the gold standard in evidence synthesis [@Stewart_1993 ; @Stewart_1995 ;@Stewart_2002] and offers great opportunities [@van_Walraven_2010] that in AD-MA are considered impossible. Besides when investigating overall treatment effects where AD-MA and IPD-MA are mathematically equivalent, IPD-MA offers (1) the possibility to standardize subgroup definitions and outcomes across studies, (2) higher validity and credibility of subgroup findings, (3) increased flexibility to search for subgroups based on combinations of patient and/or disease characteristics (4) the possibility to avoid ecological BIAS (5) investigate non-linear functional forms (6) training better prediction models and (7) efficiently synthesizing evidence from different designs. 
+  Given these advantages systematic reviews were typically applied to inform of how are IPD from mulitple sources analysed and what for. For instance, Simmonds et al [@Simmonds_2005] identified 44 IPD-MAs performed during 2000-2005 time period and  1) summarized whether IPD-MAs obtained all the data they sought 2) reported the types of approaches that were used in the analysis 3) and whether the effects of covariates have been investigated and 4) report which medical field was their topic. On a subsequent paper, 10 years later Simmonds et al. [@Simmonds_2015] identified 1371 potential IPD-MAs performed during 2010-2015 time period, sampled 184 of them and after obtaining full texts included 100 IPD-MAs. Then they investigated along with the topics investigated in the initial paper they investigated also the quality of IPD-MA reporting. Riley et al. [@Riley_2010] identified 383 IPD-MAs performed form instance until 2009 and summarised only: 1) their medical field topic and 2) whether they assessed risk or prognostic factors. Finally, Schuit and Ioannidis [@Schuit_2018] identified 327 IPD-MAs performed from inception until 2014. Nevertheless, they restricted their interest in subgroup effects investigation. Our objective is to conduct a systematic review of IPD-MA from 2015 onwards and and summarise their properties. Furthermore, we aim to inform when and how IPD-MA are performed, whether state-of the art methods are used and whether they are clearly described. 
+
+Nevertheeo far systematic reviews over the IPD-MA practices are limited until 2014. 
+
 
 **Reporting**
   IPD-MA may be conducted in either one stage or two stages. In one-stage IPD-MA, a statistical model of choice is applied and IPD from all studies are analysed simultaneously, whilst accounting for within-studies clustering of the participants. On the other hand, in two-stage IPD-MA a statistical model of choice is fitted per study. Subsequently the estimates extracted are pooled using inverse-variance meta-analytical methods. Both approaches have a variety of parameters and results that should be reported in the abstract, the methods and the results section. An extended version of PRISMA for IPD [@Stewart_2015] offers guidance on how to report results in IPD-MA. For instance, in two-stage IPD-MA 1) heterogeneity measures ( $I^2$ , Cochran's Q $\tau^2$) 2) and their corresponding methods used 3) forest plots (if applicable) and 4) use of fixed or random effects models and any other model assumptions should be described in the Methods section. Furthermore, in't Hout [@IntHout_2016] suggested that prediction intervals of estimates are also a valuable information and should be included. On the other hand, in one-stage IPD-MA 1) specification of one-stage models 2) use of fixed-effect, stratified or random-effects in the terms of the model and 3)  how clustering of patients within studies was accounted for should be reported in the methods section.
@@ -78,8 +95,7 @@ Subgroups analysis is the primary goal of IPD-MAs.
   
   
   
-**Reviews like ours and goal**
-So far systematic reviews over the IPD-MA practices are limited until 2014. For instance, Simmonds et al [@Simmonds_2005] identified 44 IPD-MAs performed during 2000-2005 time period and  1) summarized whether IPD-MAs obtained all the data they sought 2) reported the types of approaches that were used in the analysis 3) and whether the effects of covariates have been investigated and 4) report which medical field was their topic. On a subsequent paper, 10 years later Simmonds et al. [@Simmonds_2015] identified 1371 potential IPD-MAs performed during 2010-2015 time period, sampled 184 of them and after obtaining full texts included 100 IPD-MAs. Then they investigated along with the topics investigated in the initial paper they investigated also the quality of IPD-MA reporting. Riley et al. [@Riley_2010] identified 383 IPD-MAs performed form instance until 2009 and summarised only: 1) their medical field topic and 2) whether they assessed risk or prognostic factors. Finally, Schuit and Ioannidis [@Schuit_2018] identified 327 IPD-MAs performed from inception until 2014. Nevertheless, they restricted their interest in subgroup effects investigation. Our objective is to conduct a systematic review of IPD-MA from 2015 onwards and and summarise their properties. Furthermore, we aim to inform when and how IPD-MA are performed, whether state-of the art methods are used and whether they are clearly described. 
+
 
 
 \newpage
@@ -106,13 +122,21 @@ We identified 1538 published IPD-MAs. Of these
 ```{r }
 library(readxl)
 library(knitr)
+library(dplyr)
 library(ggpubr)
 library(kableExtra)
 IPD_MA <- read_xlsx("IPD-MA Cochrane papers/6. Data/New search in Pubmed.xlsx",  sheet = 1)
+IPD_MA[IPD_MA == "NA"] <- NA
 IPD_MA <- as.data.frame(IPD_MA)
 
-kable(table(IPD_MA$`General Medical Field`), caption = "Table 1","latex",col.names = c("Medical field" , "Frequencies"), booktabs = T)  %>%
-kable_styling(position = "left")
+IPD_Table_Medical_Freq= IPD_MA[!is.na(IPD_MA$`General Medical Field`),]%>%
+  group_by(`General Medical Field`)%>%
+  summarise(Frequencies =  n())%>%
+  mutate(Percentage = paste(round(Frequencies*100/sum(Frequencies),2), "%", sep = "") )
+
+
+pander(IPD_Table_Medical_Freq, style = "grid")
+
 ```
   
 \newpage 
@@ -166,13 +190,12 @@ gghistogram( x =  "Number.of..Patients", y = "..count..",bins = 30, palette = "j
 
 ```{r}
 
-library(magick)
+
 IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
 
 IPD_Outcome_frequencies = as.data.frame(matrix(data = c("Binary","Continuous","Time-to-Event",11,5,4), ncol = 2,dimnames =  list(1:3, c("Type of primary outcome" ,"Frequencies"))))
-kable(IPD_Outcome_frequencies, caption = "Table 2","latex",col.names = c("Type of primary outcome" , "Frequencies"), booktabs = T)  %>%
-kable_styling(position = "left",bootstrap_options = c("striped", "hover")) %>% kable_as_image()
 
+pander(IPD_Outcome_frequencies, caption = "Table 2",style= "grid")
 ```
 
 ```{r}
@@ -182,7 +205,11 @@ colnames(Het_table)[1] = "  "
 
 Het_table[is.na(Het_table) ] = " "
 
-kable(Het_table,caption = "Table 3", "latex")
+pander(Het_table,caption = "Table 3", "html", escape = FALSE)
+
+
+kable(head(mtcars), "html")%>%
+  kable_styling(bootstrap_options = c("striped", "hover"))%>%kable_as_image()
 ```
 
 
