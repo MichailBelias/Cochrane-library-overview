@@ -1,8 +1,5 @@
 # This is a test code for extracting  the goal of the study 
 # from the abstract
-
-
-
 ## Call the libraris
 
 library(easyPubMed)

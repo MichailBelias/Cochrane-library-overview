@@ -9,7 +9,7 @@ library(parallel)
 library(foreach)
 library(doParallel)
 
-IPD_MA = readxl::read_xlsx("IPD-MA Cochrane papers/6. Data/IPD_test.xlsx", sheet= 1)
+IPD_MA = readxl::read_xlsx("IPD-MA Cochrane papers/6. Data/New search in Pubmed.xlsx", sheet= 1)
 
 
 #IPD_MA = readxl::read_xlsx("IPD-MA Cochrane papers/IPD-MAs in General.xlsx", sheet = "Pub med IPD-MA articles")
@@ -77,21 +77,17 @@ for ( i in 1:1538){
 table(is.na(Keyword_in_Abs_DF))
 
 
-
-
-
-write.xlsx(IPD_MA , "IPD-MA Cochrane papers/temp.xlsx", showNA = F)
+write.xlsx(IPD_MA , "IPD-MA Cochrane papers/6. Data/IPD_test.xlsx", showNA = F)
 
 
 ### Find phrases cohort studies, etc
-check =  grep("cohort", lapply(Abstracts, tolower))
+check =  grep("diagnostic", lapply(Abstracts, tolower))
 
 Keyword_in_Abs_DF = data.frame(matrix(NA, nrow = 4137, ncol = 1)); colnames(Keyword_in_Abs_DF) = "Search in Abstracts"
 
 for ( i in check){
   temp = vector()
-  temp = grep("randomised clinical | randomised controlled | RCT | randomised control | placebo | 
-            randomized clinical | randomized controlled | RCT | randomized control | placebo ", 
+  temp = grep("diagnostic", 
               lapply(Abstracts[[i]], tolower),value = F)
   print(temp)
   

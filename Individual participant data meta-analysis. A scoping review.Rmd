@@ -26,7 +26,7 @@ bibliography: Style and bibliography/bibliography2.bib
 always_allow_html: yes
 ---
 
-```{r echo=F}
+```{r echo=F, warning=FALSE, message=FALSE}
 
 library(knitr)
 library(tinytex)
