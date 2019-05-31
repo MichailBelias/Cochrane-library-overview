@@ -165,15 +165,14 @@ for ( i in check){
 
 ### Find phrases Risk ratios and relative risks studies, etc
 IPD_MA = readxl::read_xlsx("IPD-MA Cochrane papers/6. Data/New search in Pubmed.xlsx", sheet= 1)
-check =  grep("risk ratio | relative risk | relative-risk | risk-ratio", lapply(Abstracts, tolower))
+check =  grep(" OR | RR | CI", Abstracts)
 
 Keyword_in_Abs_DF = data.frame(matrix(NA, nrow = 1492, ncol = 1)); colnames(Keyword_in_Abs_DF) = "Search in Abstracts"
 
 for ( i in check){
   temp = vector()
-  temp = grep("risk ratio | relative risk | relative-risk | risk-ratio", lapply(Abstracts[[i]], tolower),value = F)
+  temp = grep(" OR | RR | CI", Abstracts[[i]],value = F)
   print(temp)
-  
   if (!is.na(any(temp))){
     Keyword_in_Abs_DF[i,] = paste(Abstracts[[i]][temp], collapse = " ")
   }else{
@@ -183,10 +182,12 @@ for ( i in check){
   if(!is.na(IPD_MA[i,]$`Effect estimate`)){
     IPD_MA[i,]$`Effect estimate`= paste(IPD_MA[i,]$`Effect estimate` ,  Keyword_in_Abs_DF[i,] ,  sep = " ; ")
     print(paste(i, "Extra"))
+  }else{
+    IPD_MA[i,]$`Effect estimate`= Keyword_in_Abs_DF[i,]
   }
 }
 
-
+table(is.na(IPD_MA$`Effect estimate`))
 write.xlsx2(IPD_MA,"IPD-MA Cochrane papers/6. Data/IPD_test.xlsx")
 
 
