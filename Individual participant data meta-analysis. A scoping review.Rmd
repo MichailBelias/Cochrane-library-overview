@@ -18,9 +18,9 @@ header-includes:
 - \usepackage{makecell}
 - \usepackage{xcolor}
 output:
-  pdf_document: default
   word_document:
     reference_docx: templatePaper.docx
+  pdf_document: default
   html_document: default
 bibliography: Style and bibliography/bibliography2.bib
 always_allow_html: yes
@@ -84,7 +84,7 @@ Nevertheless far systematic reviews over the IPD-MA practices are limited until 
 
 
 **Reporting**
-  IPD-MA may be conducted in either one stage or two stages. In one-stage IPD-MA, a statistical model of choice is applied and IPD from all studies are analysed simultaneously, whilst accounting for within-studies clustering of the participants. On the other hand, in two-stage IPD-MA a statistical model of choice is fitted per study. Subsequently the estimates extracted are pooled using inverse-variance meta-analytical methods. Both approaches have a variety of parameters and results that should be reported in the abstract, the methods and the results section. An extended version of PRISMA for IPD [@Stewart_2015] offers guidance on how to report results in IPD-MA. For instance, in two-stage IPD-MA 1) heterogeneity measures ( $I^2$ , Cochran's Q $\tau^2$) 2) and their corresponding methods used 3) forest plots (if applicable) and 4) use of fixed or random effects models and any other model assumptions should be described in the Methods section. Furthermore, in't Hout [@IntHout_2016] suggested that prediction intervals of estimates are also a valuable information and should be included. On the other hand, in one-stage IPD-MA 1) specification of one-stage models 2) use of fixed-effect, stratified or random-effects in the terms of the model and 3)  how clustering of patients within studies was accounted for should be reported in the methods section.
+  IPD-MA may be conducted in either one stage or two stages. In one-stage IPD-MA, a statistical model of choice is applied and IPD from all studies are analysed simultaneously, whilst accounting for within-studies clustering of the participants. On the other hand, in two-stage IPD-MA a statistical model of choice is fitted per study. Subsequently the estimates extracted are pooled using inverse-variance meta-analytical methods. Both approaches have a variety of parameters and results that should be reported in the abstract, the methods and the results section. An extended version of PRISMA for IPD [@Stewart_2015] offers guidance on how to report results in IPD-MA. For instance, in two-stage IPD-MA 1) heterogeneity measures ( $I^2$ , Cochran's Q, $\tau^2$) 2) and their corresponding methods used 3) forest plots (if applicable) and 4) use of fixed or random effects models and any other model assumptions should be described in the Methods section. Furthermore, in't Hout [@IntHout_2016] suggested that prediction intervals of estimates are also a valuable information and should be included. On the other hand, in one-stage IPD-MA 1) specification of one-stage models 2) use of fixed-effect, stratified or random-effects in the terms of the model and 3)  how clustering of patients within studies was accounted for should be reported in the methods section.
 
 **Effect modification**
   Simmonds et al. [@Simmonds_2015] showed that IPD-MA are frequently performed in order to detect treatment effect modification. The approaches that were mostly used were one aggregated data meta-analysis approach 'meta-regression' and three IPD-MA approaches, per-subgroup meta-analysis, meta-analysis of interaction terms and one-stage IPD-MA. Guidance on which method to choose is available. Specifically, Simmonds and Higgins [@Simmonds_2007] mathematically proved that, given some unrealistic assumptions, one-stage IPD-MA is always more powerful than meta-analysis of interaction terms and meta-regression. Fisher et al. [@Fisher_2011] also critically reviewed all four approaches. They concluded that one-stage IPD-MA allows for more complex analysis, but is more difficult to perform than pooling within-trial interaction terms. Furthermore, Hua et al. [@Hua_2016] noted that these one-stage IPD-MA using mixed-effects modelling should also centre the effect modifiers to their mean, in order to separate across and within trial information and therefore accounting for ecological bias. 
@@ -115,7 +115,10 @@ For all eligible papers we extracted information that was classified in three  c
 
 # Results
 
-We identified 1538 published IPD-MAs. After exclusion of duplicates and article without Abstracts and 
+We identified 1538 published IPD-MAs. We excluded 60 duplicates.
+
+
+
 
 ```{r }
 library(readxl)
@@ -123,6 +126,7 @@ library(knitr)
 library(dplyr)
 library(ggpubr)
 library(kableExtra)
+
 
 IPD_MA <- read_xlsx("IPD-MA Cochrane papers/6. Data/New search in Pubmed.xlsx",  sheet = 1)
 IPD_MA[IPD_MA == "NA"] <- NA
@@ -137,10 +141,18 @@ IPD_Table_Medical_Freq= IPD_MA[!is.na(IPD_MA$`General Medical Field`),]%>%
 
 pander(IPD_Table_Medical_Freq, style = "grid",keep.line.breaks = TRUE, caption = "Individual participant meta-analysis per medical field", )
 
+
 ```
+
+The medical fields with the most articles were Cardiovascular diseases, cancer, neurology and mental health
+
+
   
 \newpage 
 #####
+
+The articles that are tagged as meta-analyses of individual participant data are increasing per year.
+
 
 ```{r}
 
@@ -164,8 +176,10 @@ ggbarplot(data = IPD_Year_frequencies, x =  "Year", y = "Frequencies", fill = "e
 names(IPD_MA) = gsub(x = names(IPD_MA), pattern = " ", replacement = ".")
 IPD_MA$Number.of.Studies= as.numeric(IPD_MA$Number.of.Studies)
 
-gghistogram(data = IPD_MA, x =  "Number.of.Studies", y = "..count..",bins = 30, palette = "jco",
-            ggtheme = theme_minimal(), title = "Number of trials included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )  + annotate(geom="text", x=15, y=20, label= paste("median:", median(IPD_MA$Number.of.Studies,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic"))
+p = gghistogram(data = IPD_MA, x =  "Number.of.Studies", y = "..count..",bins = 30, palette = "jco",
+            ggtheme = theme_minimal(), title = "Number of trials included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )  + annotate(geom="text", x=15, y=20, label= paste("median:", median(IPD_MA$Number.of.Studies,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic")) 
+
+p
 ```
 
 
@@ -174,8 +188,8 @@ gghistogram(data = IPD_MA, x =  "Number.of.Studies", y = "..count..",bins = 30, 
 
 IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
 
-gghistogram(IPD_MA, x =  "Number.of..Patients", y = "..count..",bins = 50, palette = "jco",
-            ggtheme = theme_minimal(), title = "Number of participants included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )+ theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic"))
+gghistogram(IPD_MA, x =  "Number.of..Patients", y = "..count..",bins = 50, palette = "jco", 
+            ggtheme = theme_minimal(), title = "Number of participants included per meta-analysis", add = "median", xlab = "Participants per Meta-analysis" )  + annotate(geom="text", x=15, y=20, label= paste("median:", median(IPD_MA$Number.of..Patients,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic")) +  xlim(0,25000)
 
 ```
 
@@ -186,10 +200,16 @@ gghistogram(IPD_MA, x =  "Number.of..Patients", y = "..count..",bins = 50, palet
 
 IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
 
-IPD_Outcome_frequencies = as.data.frame(matrix(data = c("Binary","Continuous","Time-to-Event",11,5,4), ncol = 2,dimnames =  list(1:3, c("Type of primary outcome" ,"Frequencies"))))
+IPD_Outcome_frequencies =  unlist(strsplit(gsub("[\r\n]" ,"",IPD_MA$Type.of.primary.outcome),";"))
+IPD_Outcome_frequencies =  gsub(" ", "",IPD_Outcome_frequencies )
+IPD_Outcome_frequencies =  table(IPD_Outcome_frequencies)
 
-pander(IPD_Outcome_frequencies, caption = "Table 2",style= "grid")
+
+pander( IPD_Outcome_frequencies[names(IPD_Outcome_frequencies) %in% c("Binary", "Continuous", "Time-to-event")], 
+        caption = "Table 2. Type of outcomes investigated",style= "grid")
 ```
+
+
 
 ```{r}
 
@@ -204,7 +224,13 @@ pander(Het_table, caption = "Table 3", style= "grid")
 
 
 ```{r}
-  
+IPD_Outcome_frequencies =  unlist(strsplit(gsub("[\r\n]" ,"  ",IPD_MA$Effect.estimate),";"))
+IPD_Outcome_frequencies =  trimws(IPD_Outcome_frequencies )
+table(IPD_Outcome_frequencies) 
+
+
+pander( IPD_Outcome_frequencies[names(IPD_Outcome_frequencies) %in% c("Binary", "Continuous", "Time-to-event")], 
+        caption = "Table 2. Type of outcomes investigated",style= "grid")
 ```
 
 
