@@ -236,4 +236,14 @@ for ( i in check){
 write.xlsx(IPD_MA , "IPD-MA Cochrane papers/6. Data/IPD_test.xlsx", showNA = F)
 
 
+#### Text mining titles for IPD
+titles = tolower(IPD_MA$`Title of trial`)
+titles
 
+check =  grep("ipd-ma | ipdma | systematic review | systematic-review | individual | meta-analysis", titles)
+
+IPD_MA[-check,]$`IPD  in trial`= "No"
+
+IPD_MA[check,]$`IPD  in trial`= "Yes"
+
+write.xlsx(IPD_MA , "IPD-MA Cochrane papers/6. Data/IPD_test.xlsx", showNA = F)

@@ -3,20 +3,21 @@ title: "Individual participant data meta-analysis. When? Why? How? A scoping rev
 author: "Michail Belias"
 date: "May 13, 2019"
 header-includes:
-- \usepackage{booktabs}
-- \usepackage{longtable}
-- \usepackage{array}
-- \usepackage{multirow}
-- \usepackage{wrapfig}
-- \usepackage{float}
-- \usepackage{colortbl}
-- \usepackage{pdflscape}
-- \usepackage{tabu}
-- \usepackage{threeparttable}
-- \usepackage{threeparttablex}
-- \usepackage[normalem]{ulem}
-- \usepackage{makecell}
-- \usepackage{xcolor}
+    - \usepackage{booktabs}
+    - \setlength\parindent{24pt}\setlength{\parskip}{0.0pt plus 1.0pt}
+    - \usepackage{longtable}
+    - \usepackage{array}
+    - \usepackage{multirow}
+    - \usepackage{wrapfig}
+    - \usepackage{float}
+    - \usepackage{colortbl}
+    - \usepackage{pdflscape}
+    - \usepackage{tabu}
+    - \usepackage{threeparttable}
+    - \usepackage{threeparttablex}
+    - \usepackage[normalem]{ulem}
+    - \usepackage{makecell}
+    - \usepackage{xcolor}
 output:
   word_document:
     reference_docx: templatePaper.docx
@@ -47,19 +48,35 @@ opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/',echo=F, warning=FALS
 ```
 
 
+```{r}
+library(readxl)
+library(knitr)
+library(dplyr)
+library(ggpubr)
+library(kableExtra)
+
+
+IPD_MA <- read_xlsx("IPD-MA Cochrane papers/6. Data/New search in PubMed.xlsx",  sheet = 1)
+IPD_MA[IPD_MA == "NA"] <- NA
+IPD_MA <- as.data.frame(IPD_MA)
+```
+
+\newpage
+
+######
 
 # Abstract
 ## Background
-Individual participant data(IPD) meta-analysis(MA) is considered the gold standard for evidence based inference. It is well established that IPD-MA offers great advantages compared to aggregate MA and single studies. Therefore, several systematic reviews have been conducted in order to investigate current practice and provide guidance. Besides the characteristics of the meta-analyses (size, design, type of outcome) most reviews report the primary goal (subgroup analysis, risk factor assessment) and subsequently the statistical approaches applied. Nevertheless, last five years no review has been published, while new guidance is present. Furthermore, past reviews were narrowed down to specific IPD-MA advantages (For instance subgroup analysis or modelling).
+Individual participant data(IPD) meta-analysis(MA) is considered the gold standard for evidence based inference. It is well established that IPD-MA offers great advantages compared to aggregate MA and single studies, thus systematic reviews have been conducted in order to investigate current practice and propose guidance. Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines help authors in reporting systematic reviews and meta-analyses. Nevertheless, the extended PRISMA guidelines were introduced in 2015 and no review has been performed since then.
 
-**Objective:** Our goal is to conduct a scoping review of IPD-MA and summarise the aforementioned characteristics. Consequently, we aim to inform how IPD-MA are performed, what was their goal, which statistical approach they used and whether all above were clearly described according to PRISMA guidelines and/or to the level that the analysis can be reproduced. 
+**Objective:** Our goal is to conduct a scoping review of IPD-MA and summarise their reporting quality and statistical approaches used. Consequently, we aim to inform how IPD-MA are performed, what is their goal, which statistical approach they use and whether reporting was described according to PRISMA guidelines and/or to the level that the analysis can be reproduced. 
 
 ## Methods 
-We searched  MEDLINE and the Cochrane Library **(we can include more databases i.e. EMBASE etc.)** for IPD-MA to identify IPD-MAs performed the last five years. We excluded diagnostic IPD-MA. We screened the abstracts and extracted the size of MA, their primary goal, outcome(s), study designs included, statistical analysis and modelling approach performed. We report if information was unclear or not reported and considered the full-text. 
-
+We searched MEDLINE, PubMed and Cochrane IPD-MA Library for IPD-MAs related articles published the last five years. We screened the titles and abstracts and extracted where possible the size of the meta-analysis, their primary goal, type of outcome(s), study designs, statistical analysis and modelling approaches performed. Subsequently we excluded diagnostic, network, predictive and opportunistic IPD-MAs and articles with poor reporting and sampled the remaining for full text consideration. Finally, we assessed the quality of -within full text- reporting according to the PRISMA-IPD guidelines.
 
 ## Results
-Our search resulted in 1538 articles, after exclusion criteria we ended with *xxx*.  We showed an increase per year in IPD-MAs performed. 'The two most predominant medical fields were Cancer *(16%)*, Cardiovascular diseases *(16%)* and Mental health *(10%)*. An increasing trend in both IPD-MA in general and specifically in one-stage methods per year has been showed. Nevertheless, more information should be provided in both the abstract and the article over the statistical approaches followed.'
+Our search resulted in 1538 articles, after exclusion criteria we ended with *702*. We sampled 100 and considered their full texts. IPD-MAs have seen considerable growth over the last five years. Random-effects are most often used and one-stage are almost equally performed as two-stage approaches. Most IPD-MAs have not clearly stated the goal, statistical approach and characteristics of their meta-analysis in their abstract and title. 
+
  
 *Temporary*
 
@@ -73,103 +90,109 @@ Our search resulted in 1538 articles, after exclusion criteria we ended with *xx
 
 
 \newpage
-
 ######
+
 # Introduction
 
-  Meta-analysis (MA) is a statistical method that involves combining information from multiple sources. While initially, meta-analyses were limited in aggregated data (AD) in the early 1990s individual participant data meta-analysis (IPD-MA or IPDMA) was introduced [@CHALMERS_1993]. In IPD-MA the participant level information is available and therefore evidence from multiple studies can be analysed centrally. Collecting the IPD may be a difficult and time consuming task, but nevertheless IPD-MA is considered the gold standard in evidence synthesis [@Stewart_1993 ; @Stewart_1995 ;@Stewart_2002] and offers great opportunities [@van_Walraven_2010] that in AD-MA are considered impossible. Besides when investigating overall treatment effects where AD-MA and IPD-MA are mathematically equivalent, IPD-MA offers (1) the possibility to standardize subgroup definitions and outcomes across studies, (2) higher validity and credibility of subgroup findings, (3) increased flexibility to search for subgroups based on combinations of patient and/or disease characteristics (4) the possibility to avoid ecological BIAS (5) investigate non-linear functional forms (6) training better prediction models and (7) efficiently synthesizing evidence from different designs. 
-  Given these advantages systematic reviews were typically applied to inform of how are IPD from multiple sources analysed and what for. For instance, Simmonds et al [@Simmonds_2005] identified 44 IPD-MAs performed during 2000-2005 time period and  1) summarized whether IPD-MAs obtained all the data they sought 2) reported the types of approaches that were used in the analysis 3) and whether the effects of covariates have been investigated and 4) report which medical field was their topic. On a subsequent paper, 10 years later Simmonds et al. [@Simmonds_2015] identified 1371 potential IPD-MAs performed during 2010-2015 time period, sampled 184 of them and after obtaining full texts included 100 IPD-MAs. Then they investigated along with the topics investigated in the initial paper they investigated also the quality of IPD-MA reporting. Riley et al. [@Riley_2010] identified 383 IPD-MAs performed form instance until 2009 and summarised only: 1) their medical field topic and 2) whether they assessed risk or prognostic factors. Finally, Schuit and Ioannidis [@Schuit_2018] identified 327 IPD-MAs performed from inception until 2014. Nevertheless, they restricted their interest in subgroup effects investigation. Our objective is to conduct a systematic review of IPD-MA from 2015 onwards and and summarise their properties. Furthermore, we aim to inform when and how IPD-MA are performed, whether state-of the art methods are used and whether they are clearly described. 
+####### Meta-analysis (MA) is a statistical method that involves combining information from multiple sources. While initially meta-analyses were limited in aggregated data (AD) in the early 1990s individual participant data meta-analysis (IPD-MA or IPDMA) was introduced by Chalmers et al. [@CHALMERS_1993]. In IPD-MA the participant level information is available and therefore evidence from multiple studies can be analysed as a whole. Collecting the IPD may be a difficult and time consuming task, but IPD-MA offers great opportunities [@van_Walraven_2010] that in AD-MA and single studies may not be possible. Therefore, IPD-MA is considered the gold standard in evidence synthesis [@Stewart_1993 ; @Stewart_1995 ;@Stewart_2002]. 
+#######   Due to these advantages literature exists in order to provide guidance. This guidance can be classified in two main trajectories : 1) guidance over the reporting of an IPD-MA and 2) guidance over statistical approaches that should be preferred. For the first, an extended version of Preferred Reporting Items for Systematic Review and Meta-Analyses (PRISMA) for individual participant data (IPD) [@Stewart_2015] has been developed. PRISMA-IPD offers guidance in the reporting of both the title and abstact, and the full article (introduction, methods, results, discussion and funding). For instance, researchers should identify in the title their report as a systematic review and/or meta-analysis of individual participant data. Furthermore, they should provide in the abstract a clear background statement, describe the eligibility criteria and search strategy, provide the number of studies and participants, report the summary effect estimates and measures of heterogeneity and finally, they should state the main strengths and limitations, interpret the results and report funding sources. Subsequently, reporting should be more detailed in the full text. 
 
-Nevertheless far systematic reviews over the IPD-MA practices are limited until 2014. 
-
-
-**Reporting**
-  IPD-MA may be conducted in either one stage or two stages. In one-stage IPD-MA, a statistical model of choice is applied and IPD from all studies are analysed simultaneously, whilst accounting for within-studies clustering of the participants. On the other hand, in two-stage IPD-MA a statistical model of choice is fitted per study. Subsequently the estimates extracted are pooled using inverse-variance meta-analytical methods. Both approaches have a variety of parameters and results that should be reported in the abstract, the methods and the results section. An extended version of PRISMA for IPD [@Stewart_2015] offers guidance on how to report results in IPD-MA. For instance, in two-stage IPD-MA 1) heterogeneity measures ( $I^2$ , Cochran's Q, $\tau^2$) 2) and their corresponding methods used 3) forest plots (if applicable) and 4) use of fixed or random effects models and any other model assumptions should be described in the Methods section. Furthermore, in't Hout [@IntHout_2016] suggested that prediction intervals of estimates are also a valuable information and should be included. On the other hand, in one-stage IPD-MA 1) specification of one-stage models 2) use of fixed-effect, stratified or random-effects in the terms of the model and 3)  how clustering of patients within studies was accounted for should be reported in the methods section.
-
-**Effect modification**
-  Simmonds et al. [@Simmonds_2015] showed that IPD-MA are frequently performed in order to detect treatment effect modification. The approaches that were mostly used were one aggregated data meta-analysis approach 'meta-regression' and three IPD-MA approaches, per-subgroup meta-analysis, meta-analysis of interaction terms and one-stage IPD-MA. Guidance on which method to choose is available. Specifically, Simmonds and Higgins [@Simmonds_2007] mathematically proved that, given some unrealistic assumptions, one-stage IPD-MA is always more powerful than meta-analysis of interaction terms and meta-regression. Fisher et al. [@Fisher_2011] also critically reviewed all four approaches. They concluded that one-stage IPD-MA allows for more complex analysis, but is more difficult to perform than pooling within-trial interaction terms. Furthermore, Hua et al. [@Hua_2016] noted that these one-stage IPD-MA using mixed-effects modelling should also centre the effect modifiers to their mean, in order to separate across and within trial information and therefore accounting for ecological bias. 
-
-**Modelling functional forms**
-  IPD-MA may be performed in order to investigate the role of risk-factors in the prevalence of a disease. In that case observational studies are typically meta-analysed. Thereto, IPD-MA may involve modelling also non-linear functional forms. Sauerbrei and Royston [@Sauerbrei_2011] suggested the use of a two stage approach. As a first stage a fractional polynomial is selected  and pooling their estimates through a point-wise weighted meta-analytical process. Subsequently they extended these non-linear associations to include interactions [@royston_interaction_2013]. Furthermore, splines may also be applied to detect non-linear associations.
-  
-  
-  
+#######   On the other hand, guidance over the statistical approaches is associated with the goal of the IPD-MA. For instance, Simmonds et al. [@Simmonds_2015] showed that IPD-MA are frequently performed in order to detect treatment effect modification. The approaches that were mostly used were meta-regression (an AD-MA approach) and three IPD-MA approaches, per-subgroup meta-analysis, meta-analysis of interaction terms and one-stage IPD-MA. A series of comparisons of these methods has provided guidance on which to choose. Specifically, Simmonds and Higgins [@Simmonds_2007] mathematically proved that, one-stage IPD-MA is always more powerful than meta-analysis of interaction terms and meta-regression. Nevertheless, in order to provide a closed mathematical form they made unrealistic assumptions. Fisher et al. [@Fisher_2011] critically reviewed all four approaches and concluded that one-stage IPD-MA allows for more complex analysis, but is more difficult to perform than pooling within-trial interaction terms. Furthermore, Hua et al. [@Hua_2016] noted that these one-stage IPD-MAs using mixed-effects modelling should also centre the effect modifiers to their mean, in order to separate across and within trial information and therefore account for ecological bias. 
+#######   Furthermore, IPD-MA may be performed in order to investigate the role of risk-factors in the prevalence of a disease. In that case observational studies are typically included and statistical analysis involves multi-variable modelling and occasionally non-linear functional forms. Sauerbrei and Royston [@Sauerbrei_2011] suggested the use of a two stage approach. At the first stage a fractional polynomial is selected and as a second stage their estimates are pooled using a point-wise weighted meta-analytical process. In a subsequent article they extended their approach to include interactions [@royston_interaction_2013]. 
 
 
+#######   Part of the aforementioned characteristics have been investigated in systematic reviews over the years. For instance, Simmonds et al [@Simmonds_2005] identified 44 IPD-MAs performed during 2000-2005 time period and summarized 1) whether IPD-MAs obtained all the data they sought 2) if they clearly described the statistical approaches they used 3) if the effects of co-variables have also been investigated and 4) their medical field. On a subsequent paper, 10 years later Simmonds et al. [@Simmonds_2015] identified 1371 potential IPD-MAs performed during 2010-2015 time period, sampled 184 of them and after obtaining full texts included 100 IPD-MAs. Then along with the topics investigated in the initial paper they investigated also the quality of IPD-MA reporting. Riley et al. [@Riley_2010] identified 383 IPD-MAs performed from instance until 2009 and summarised only: 1) their medical field topic and 2) whether they assessed risk or prognostic factors. Finally, Schuit and Ioannidis [@Schuit_2018] identified 327 IPD-MAs performed from inception until 2014. Nevertheless, they restricted their interest in treatment effects investigation.
+
+
+####### As far as we know no other Scoping or systematic review has been available since 2015, while new guidance is present. Therefore, our goal is to conduct a scoping review of IPD-MA from 2015 and onwards and summarise their aforementioned properties. Consequently, we aim to inform why and how IPD-MA are performed, which statistical approaches are preferred and whether they are clearly described according to the PRISMA-IPD guidelines. 
 
 \newpage
-
 ######
+
 # Methods 
-This study is a scoping review of current practices in IPD-MAs . We report our study according to the Preferred Reporting Items for Systematic Reviews and Meta-Analyses (PRISMA) guidelines. No formal protocol exists for this study.
 
-## IPD-MA search and selection strategy
+####### This study is a scoping review of current practices in IPD-MAs. We report our study according to the Preferred Reporting Items for Systematic reviews and Meta-Analyses extension for Scoping Reviews (PRISMA-ScR) guidelines. *(bold are checkpoints in the PRISMA-ScR check-list)*
 
-We searched in MEDLINE, PubMed, Cochrane library **(we can place more)** for IPD-MA conducted between 01/01/2015 and 01/05/2019, see in **Supplementary material** for search strategy. We included IPD-MAs of either RCTs or observational studies, reporting at least one intervention in human subjects. We excluded IPD-MAs not written in English. We also excluded diagnostic and prediction IPD-MAs. We removed duplicate papers and from series we included only the last article. When unclear we considered full-text assessment. Any disagreement was solved by a third reviewer.  **if we have to find one it is suggest though**
+**Protocol and registration**
+No formal protocol exists for this study. 
 
-## Data extraction and statistical analysis
+**Information sources**
+A MEDLINE, PubMed and Cochrane library search was performed in $1^{st}$ of May using the following search terms: _(("Meta-Analysis"[Publication Type] OR meta-analys$*$[tiab] OR metaanalys$*$[tiab]) AND (individual participant[tiab] OR individual participants[tiab] OR individual participant's[tiab] OR individual patient[tiab] OR individual patients[tiab] OR individual patient's[tiab] OR individualized participant[tiab] OR individualized participants[tiab] OR individualized participant's[tiab] OR individualized patient[tiab] OR individualized patients[tiab] OR individualized patient's[tiab] OR individualised participant[tiab] OR individualised participants[tiab] OR individualised participant's[tiab] OR individualised patient[tiab] OR individualised patients[tiab] OR individualised patient's[tiab]) AND data[tiab]) OR IPDMA[tiab] OR IPD-MA[tiab] AND ("2015/01/01"[PDat] : "2019/05/01"[PDat])_ 
 
-For all eligible papers we extracted information that was classified in three  categories: 1) the reporting of the IPD-MA (such as the medical field, number of included studies and participants, the goal described in the abstract); 2) the statistical analysis of the IPD-MA (type of outcome,type of statistical approach,descriptions of methods, and assessment of heterogeneity); and 3) the reporting of the results (forest-plots, how many comparisons were performed, proportion of statistically significant, reporting of subgroup analyses and/or interaction terms) and 4) when 
+**Eligibility criteria**
+We included studies describing an IPD-MA published between 01/01/2015 and 01/05/2019. We removed duplicate papers and from series of articles we included only the most recent. Our scoping review has been performed in two stages, one evaluating the title and abstract of all IPD-MAs and one evaluating the full text of a subset of them. Specifically, in the first stage we considered all available IPD-MAs and screened their titles and abstracts. Thereto, we extracted information -if present- over the year, medical field, number of included studies and participants, the goal, types of outcomes and statistical approaches preferred. Subsequently, we excluded diagnostic test and predictive IPD-MAs. Other reasons for further exclusion were: 1) full text was not published in English, 2) IPD-MAs were given as examples (for instance in methodological, health-technology assessments and cost-effectiveness studies) 3) we had no access to the full text and 4) the studies were protocols. Finally, we sampled 100 of these eligible studies and extracted information over the statistical analysis and evaluated the reporting quality according to the PRISMA-IPD guidelines.
+
+**Data items**
+
+We summarised our results using descriptive statistics such as frequency tables and bar-plots.
+
 
 \newpage
 
 # Results
 
-We identified 1538 published IPD-MAs. We excluded 60 duplicates.
+Our search identified 1538 potential records. We removed 61 duplicates and series of articles. We screened the titles and abstracts of the remaining 1477 studies. Approximately 36% of the papers were not identified as a systematic review, or meta-analysis or meta-analysis of individual participant data.
 
 
 
+```{r}
+IPD_MA%>% 
+  group_by(`Type of study in title`)%>%
+  summarise(Frequency =  n())%>%
+  arrange(desc(Frequency))%>%
+  mutate(Percentage = paste(round(Frequency*100/sum(Frequency),2), "%", sep = "") ) %>%
+  pander(style = "grid",keep.line.breaks = TRUE, caption = "Table 1. Percentage of articles indicating their type of study in the title")
+```
 
-```{r }
-library(readxl)
-library(knitr)
-library(dplyr)
-library(ggpubr)
-library(kableExtra)
+We show an increasing trend over the years of articles involved with IPD-MA. IPD methods seem to gain popularity in medical fields such as pregnancy and childbirth, mental health and neurology 
 
+```{r}
 
-IPD_MA <- read_xlsx("IPD-MA Cochrane papers/6. Data/New search in Pubmed.xlsx",  sheet = 1)
-IPD_MA[IPD_MA == "NA"] <- NA
-IPD_MA <- as.data.frame(IPD_MA)
+IPD_Year_Frequency = IPD_MA %>%
+  group_by(Year)%>%
+  summarise(Frequency=n())
 
-IPD_Table_Medical_Freq= IPD_MA[!is.na(IPD_MA$`General Medical Field`),]%>% 
-  group_by(`General Medical Field`)%>%
-  summarise(Frequencies =  n())%>%
-  arrange(desc(Frequencies))%>%
-  mutate(Percentage = paste(round(Frequencies*100/sum(Frequencies),2), "%", sep = "") )
+IPD_Year_Frequency$estimated = rep("No")
+IPD_Year_Frequency[6,] = c(2019, 350, "Yes" )
+IPD_Year_Frequency$estimated =  factor(IPD_Year_Frequency$estimated, levels = c("Yes","No"))
 
-
-pander(IPD_Table_Medical_Freq, style = "grid",keep.line.breaks = TRUE, caption = "Individual participant meta-analysis per medical field", )
-
+ggbarplot(data = IPD_Year_Frequency, x =  "Year", y = "Frequency", fill = "estimated",label = F,palette = "jco",
+          ggtheme = theme_minimal(), title = "Number of IPD-MAs performed per year", caption =  "Figure 1.",xlab = "Year" ) + 
+    theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic") ,
+          plot.subtitle = element_text(hjust = 0.5,size = 12, face = "bold.italic"))+ geom_text( aes(label=Frequency), vjust=c(1.5,1.5,1.5,1.5,1.5,-13))
 
 ```
 
-The medical fields with the most articles were Cardiovascular diseases, cancer, neurology and mental health
+
+
+*Title results*
+
+
+*Synthesis of results*
+
+
+
+
+
+```{r}
+IPD_MA%>% 
+  filter(`General Medical Field` !=  "Statistical") %>%
+  filter(!is.na(`General Medical Field`))%>%
+  group_by(`General Medical Field`)%>%
+  summarise(Frequency =  n())%>%
+  arrange(desc(Frequency))%>%
+  mutate(Percentage = paste(round(Frequency*100/sum(Frequency),2), "%", sep = "") )%>%
+  head(n= 5)%>%
+pander(style = "grid",keep.line.breaks = TRUE, caption = "Table 2. Individual participant meta-analysis per medical field (top 5 reported)" )
+```
+####### The medical fields with the most articles were Cardiovascular diseases, cancer, neurology and mental health.
 
 
   
 \newpage 
 #####
 
-The articles that are tagged as meta-analyses of individual participant data are increasing per year.
 
-
-```{r}
-
-IPD_Year_frequencies = IPD_MA %>%
-  group_by(Year)%>%
-  summarise(Frequencies=n())
-
-IPD_Year_frequencies$estimated = rep("No")
-IPD_Year_frequencies[6,] = c(2019, 350, "Yes" )
-IPD_Year_frequencies$estimated =  factor(IPD_Year_frequencies$estimated, levels = c("Yes","No"))
-
-ggbarplot(data = IPD_Year_frequencies, x =  "Year", y = "Frequencies", fill = "estimated",label = F,palette = "jco",
-          ggtheme = theme_minimal(), title = "Number of IPD-MAs performed per year", caption =  "Figure 1.",xlab = "Year" ) + 
-    theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic") ,
-          plot.subtitle = element_text(hjust = 0.5,size = 12, face = "bold.italic"))+ geom_text( aes(label=Frequencies), vjust=c(1.5,1.5,1.5,1.5,1.5,-13))
-
-```
 
 ```{r}
 
@@ -177,7 +200,7 @@ names(IPD_MA) = gsub(x = names(IPD_MA), pattern = " ", replacement = ".")
 IPD_MA$Number.of.Studies= as.numeric(IPD_MA$Number.of.Studies)
 
 p = gghistogram(data = IPD_MA, x =  "Number.of.Studies", y = "..count..",bins = 30, palette = "jco",
-            ggtheme = theme_minimal(), title = "Number of trials included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )  + annotate(geom="text", x=15, y=20, label= paste("median:", median(IPD_MA$Number.of.Studies,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic")) 
+            ggtheme = theme_minimal(), title = "Number of trials included per meta-analysis", add = "median", xlab = "Trials per Meta-analysis" )  + annotate(geom="text", x=100, y=20, label= paste("median:", median(IPD_MA$Number.of.Studies,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic")) 
 
 p
 ```
@@ -189,7 +212,7 @@ p
 IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
 
 gghistogram(IPD_MA, x =  "Number.of..Patients", y = "..count..",bins = 50, palette = "jco", 
-            ggtheme = theme_minimal(), title = "Number of participants included per meta-analysis", add = "median", xlab = "Participants per Meta-analysis" )  + annotate(geom="text", x=15, y=20, label= paste("median:", median(IPD_MA$Number.of..Patients,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic")) +  xlim(0,25000)
+            ggtheme = theme_minimal(), title = "Number of participants included per meta-analysis", add = "median", xlab = "Participants per Meta-analysis" )  + annotate(geom="text", x=5000, y=20, label= paste("median:", median(IPD_MA$Number.of..Patients,na.rm = T)), color="red") + theme(plot.title = element_text(hjust = 0.5,size = 18, face = "bold.italic")) +  xlim(0,25000)
 
 ```
 
@@ -200,16 +223,17 @@ gghistogram(IPD_MA, x =  "Number.of..Patients", y = "..count..",bins = 50, palet
 
 IPD_MA$Number.of..Patients = as.numeric(IPD_MA$Number.of..Patients)
 
-IPD_Outcome_frequencies =  unlist(strsplit(gsub("[\r\n]" ,"",IPD_MA$Type.of.primary.outcome),";"))
-IPD_Outcome_frequencies =  gsub(" ", "",IPD_Outcome_frequencies )
-IPD_Outcome_frequencies =  table(IPD_Outcome_frequencies)
+IPD_Outcome_Frequency =  unlist(strsplit(gsub("[\r\n]" ,"",IPD_MA$Type.of.primary.outcome),";"))
+IPD_Outcome_Frequency =  gsub(" ", "",IPD_Outcome_Frequency )
+IPD_Outcome_Frequency =  table(IPD_Outcome_Frequency)
 
 
-pander( IPD_Outcome_frequencies[names(IPD_Outcome_frequencies) %in% c("Binary", "Continuous", "Time-to-event")], 
-        caption = "Table 2. Type of outcomes investigated",style= "grid")
+pander( IPD_Outcome_Frequency[names(IPD_Outcome_Frequency) %in% c("Binary", "Continuous", "Time-to-event")], 
+        caption = "Table 3. Type of outcomes investigated",style= "grid")
 ```
 
-
+\newpage 
+#####
 
 ```{r}
 
@@ -218,22 +242,16 @@ colnames(Het_table)[1] = "  "
 
 Het_table[is.na(Het_table) ] = " "
 
-pander(Het_table, caption = "Table 3", style= "grid")
+pander(Het_table, caption = "Table 4. Statistical approaches performed to detect treatment-effect modification", style= "grid")
 ```
 
 
 
-```{r}
-IPD_Outcome_frequencies =  unlist(strsplit(gsub("[\r\n]" ,"  ",IPD_MA$Effect.estimate),";"))
-IPD_Outcome_frequencies =  trimws(IPD_Outcome_frequencies )
-table(IPD_Outcome_frequencies) 
+\newpage
 
+######
 
-pander( IPD_Outcome_frequencies[names(IPD_Outcome_frequencies) %in% c("Binary", "Continuous", "Time-to-event")], 
-        caption = "Table 2. Type of outcomes investigated",style= "grid")
-```
-
-
+# Discussion
 
 
 \newpage
