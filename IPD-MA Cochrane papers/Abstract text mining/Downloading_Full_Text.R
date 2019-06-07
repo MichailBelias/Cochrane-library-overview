@@ -11,6 +11,8 @@ library(dplyr)
 library(ggpubr)
 library(kableExtra)
 
+
+
 IPD_MA <- read_xlsx("IPD-MA Cochrane papers/6. Data/New search in Pubmed.xlsx",  sheet = 1)
 IPD_MA[IPD_MA == "NA"] <- NA
 IPD_MA <- as.data.frame(IPD_MA)
@@ -23,6 +25,21 @@ for ( i in 210:dim(download)[1]){
   browseURL(paste("https://sci-hub.tw/",download$doi[i], sep = ""), browser = getOption("browser"), encodeIfNeeded = FALSE)
   print(download[i,]$`Title of trial`)
 }
+
+
+for ( i in 1:dim(small)[1]){
+  if(!is.na(small[i,]$doi)){
+  Sys.sleep(time = 1 )
+  browseURL(paste("https://sci-hub.tw/",small$doi[i], sep = ""), browser = getOption("browser"), encodeIfNeeded = FALSE)
+  print(small[i,]$`Title of trial`)
+  }else{
+    Sys.sleep(time = 1 )
+    browseURL(paste("https://sci-hub.tw/",small$EntrezUID[i], sep = ""), browser = getOption("browser"), encodeIfNeeded = FALSE)
+    print(small[i,]$`Title of trial`)
+  }
+}
+
+
 
 for ( i in 1:86){
   download.file(url = paste("https://sci-hub.tw/",IPD_MA$doi[i], sep = ""),

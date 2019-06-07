@@ -22,11 +22,10 @@ table(IPD_MA$`Type of studies included`)
 Abstracts = list()
 
 
-for(i in 1:1538){
-  
+for(i in 1:dim(IPD_MA)[1]){
   Abstracts[[i]] = unlist(strsplit(IPD_MA[i,]$Abstract, "(?<=\\.)\\s(?=[A-Z])", perl=T))
-  
 }
+
 
 ### Find phrases such as randomised clinical trials , cohort studies, etc
 check =  grep("randomised clinical | randomised controlled | prospective | case-controls | case-reports | RCT | randomised control | placebo | genome-wide | cohort studies | observational studies| randomized clinical | randomized controlled | RCT | randomized control | prospective studies ",lapply(Abstracts, tolower))
