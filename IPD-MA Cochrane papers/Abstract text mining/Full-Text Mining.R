@@ -3,7 +3,8 @@ library(pdftools)
 
 setwd("IPD-MA Cochrane papers/7. sample of IPD-MAs/")
 files <- list.files(pattern = "pdf$")
-
+heading_search(files, headings = c('abstract', 'introduction'),
+               path = TRUE)
 
 opinions <- lapply(files, pdf_text)
 
@@ -30,7 +31,9 @@ opinions.tdm <- TermDocumentMatrix(corp,
 inspect(opinions.tdm[1:10,]) 
 
 
+tidy.terms  =tidy(opinions.tdm)
 
+tidy.terms[which(tidy.terms$term %in% c("one")),]
 
 library(dplyr)
 library(janeaustenr)
